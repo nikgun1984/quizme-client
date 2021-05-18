@@ -10,6 +10,6 @@ Technologies:
 # WHAT IS DONE:  
 - Registration/Login
 
-#TO-DO
+# TO-DO
 - Screen when signed in/login screen/registration screen/build up study sets screen
 
