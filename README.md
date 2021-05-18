@@ -7,6 +7,8 @@ Technologies:
 - Material UI. 
 - MaterializeCSS. 
 
+![alt text](sample.jpg)
+
 # WHAT IS DONE:  
 - Registration/Login
 
