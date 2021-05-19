@@ -1,6 +1,10 @@
+import React, {useEffect} from 'react';
+import IPage from '../interfaces/page';
+import logging from'../configs/logging';
 import {useForm} from '../hooks/useForm';
 
-const SignupForm: React.FC = () => {
+
+const RegisterPage: React.FC<IPage> = props => {
 	const initialState = {
 		username:'',
 		email:'',
@@ -8,11 +12,14 @@ const SignupForm: React.FC = () => {
 	}
 
 	const {handleOnChange,handleSubmitForm,formData} = useForm(signupUser,initialState);
-
+	// for refs : const ref = useRef<HTMLInputElement>(null);
+	// then ref.current!.value <--- means it will never be null to ignore warning
 	async function signupUser() {
         // send "values" to database
     }
-    
+	useEffect(()=> {
+		logging.info(`Loading ${props.name}`)
+	},[props.name])
 	return (
 		<div className="row mt2">
 			<form className="col s8" onSubmit={handleSubmitForm}>
@@ -42,4 +49,4 @@ const SignupForm: React.FC = () => {
 	)
 }
 
-export default SignupForm;
+export default RegisterPage;
