@@ -11,7 +11,7 @@ const HomePage: React.FC<IPage & RouteComponentProps<any>> = props => {
 		number?setMessage(`The number is ${number}`):setMessage('No number was provided...');
 	},[props.match.params.number, props.name])
 	return (
-		<p>{message}</p>
+		<h1>Welcome to the application!!!</h1>
 	)
 }
 

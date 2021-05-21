@@ -1,5 +1,9 @@
 body {
     margin: 0;
+    position: relative;
+    padding-bottom: 58px;
+    min-height: 100vh;
+    background-color: rgb(237, 223, 246);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -14,9 +18,22 @@ code {
     padding-right: 1rem;
 }
 
+.px4 {
+    padding-left: 4rem;
+}
+
+.align-center {
+    vertical-align: middle;
+}
+
 .mt2 {
     margin-top: 2rem;
 }
+
+.mt4 {
+    margin-top: 4rem;
+}
+
 
 .row .col {
     float: none !important;
@@ -29,7 +46,18 @@ code {
     color: rgb(152, 17, 214) !important;
 }
 /* label underline focus color */
-.row .input-field input:focus {
+.input-field input:focus {
     border-bottom: 1px solid rgb(152, 17, 214) !important;
     box-shadow: 0 1px 0 0 rgb(152, 17, 214) !important
+}
+
+footer {
+    text-align: center;
+    background-color: rgb(205, 63, 205);
+    color: white;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: #663399;
 }

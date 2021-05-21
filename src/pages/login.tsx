@@ -21,21 +21,21 @@ const LoginPage: React.FC<IPage> = props => {
 	},[props.name])
 	return (
 		<div className="row mt2">
+			<h3>Login Form</h3>
 			<form className="col s8" onSubmit={handleSubmitForm}>
-			<div className="row">
-				<div className="input-field col s12">
-				<input id="username_signin" type="text" className="validate" placeholder="Username" onChange={handleOnChange}/>
-				<label htmlFor="username_signin" className="active">Enter your username</label>
+				<div className="row">
+					<div className="input-field col s12">
+					<input id="username_signin" type="text" className="validate" placeholder="Username" onChange={handleOnChange}/>
+					<label htmlFor="username_signin" className="active">Enter your username</label>
+					</div>
 				</div>
-			</div>
-			<div className="row">
-				<div className="input-field col s12">
-				<input id="password_signin" type="password" className="validate" placeholder="Password" onChange={handleOnChange}/>
-				<label htmlFor="password_signin" className="active">Enter your valid password</label>
+				<div className="row">
+					<div className="input-field col s12">
+						<input id="password_signin" type="password" className="validate" placeholder="Password" onChange={handleOnChange}/>
+						<label htmlFor="password_signin" className="active">Enter your valid password</label>
+					</div>
 				</div>
-			</div>
-			<button className="waves-effect waves-light btn purple darken-1"><i className="material-icons left">login</i>Login</button>
-
+				<button className="waves-effect waves-light btn purple darken-1"><i className="material-icons left">login</i>Login</button>
 			</form>
   		</div>
 	)
