@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink,Link } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 
-const Footer: React.FC = () => {
+const Footer: React.FC= (props) => {
 	return (
-    <>
       <footer className=''>
           {/* <div className="footer-copyright">
             <div className="container"> */}
@@ -11,7 +11,6 @@ const Footer: React.FC = () => {
             {/* </div>
           </div> */}
         </footer>
-    </>
 	)
 }
 

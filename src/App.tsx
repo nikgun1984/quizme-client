@@ -11,7 +11,7 @@ const App: React.FC<{}> = (props) => {
   },[])
   return (
       <BrowserRouter>
-        <NavBar  />
+        <NavBar />
         <div className="container center-align">
             <Switch>
               {routes.map((route, index)=>{
@@ -38,3 +38,4 @@ const App: React.FC<{}> = (props) => {
 }
 
 export default App;
+
