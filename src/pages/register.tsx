@@ -1,51 +1,54 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
-import {useForm} from '../hooks/useForm';
+import { IRegisterForm } from '../interfaces/forms';
+import {registerSchema} from '../validation/registerSchema';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 
 const RegisterPage: React.FC<IPage> = props => {
-	const initialState = {
-		username:'',
-		email:'',
-		password:''
-	}
 
-	const {handleOnChange,handleSubmitForm,formData} = useForm(signupUser,initialState);
-	// for refs : const ref = useRef<HTMLInputElement>(null);
-	// then ref.current!.value <--- means it will never be null to ignore warning
-	async function signupUser() {
+	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
+    const onSubmit = useCallback((formValues: IRegisterForm) => {
+    	console.log(formValues);
+  	}, []);
+	
+	  async function signupUser() {
         // send "values" to database
     }
+
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
 	},[props.name])
 	return (
 		<div className="row mt2">
-			<h3>Register Form</h3>
-			<form className="col s8" onSubmit={handleSubmitForm}>
+			<h3>Register</h3>
+			<form className="col s8" onSubmit={handleSubmit(onSubmit)}>
 				<div className="row">
 					<div className="input-field col s12">
-					<input id="username" name="username" type="text" className="validate" placeholder="Username" onChange={handleOnChange}/>
-					<label htmlFor="username" className="active">Enter your new username</label>
+						<input id="username" {...register("username")} type="text" defaultValue="" placeholder="Username"/>
+						<label htmlFor="username" className="active">Enter your new username</label>
+						{errors.username?.message && <span className="helper-text red-text left-align">{errors.username?.message}</span>}
 					</div>
 				</div>
 				<div className="row">
 					<div className="input-field col s12">
-					<input id="email" name="email" type="email" className="validate" placeholder="Email" onChange={handleOnChange}/>
-					<label htmlFor="email" className="active">Enter your email</label>
+						<input id="email" {...register("email")} type="email" placeholder="Email"/>
+						<label htmlFor="email" className="active">Enter your email</label>
+						{errors.email?.message && <span className="helper-text red-text left-align">{errors.email?.message}</span>}
 					</div>
 				</div>
 				<div className="row">
 					<div className="input-field col s12">
-					<input id="password" name="password" type="password" className="validate" placeholder="Password" onChange={handleOnChange}/>
-					<label htmlFor="password" className="active">Create your password</label>
+						<input id="password" {...register("password")} type="password" placeholder="Password"/>
+						<label htmlFor="password" className="active">Create your password</label>
+						{errors.password?.message && <span className="helper-text red-text left-align">{errors.password?.message}</span>}
 					</div>
 				</div>
 				<pre><Link to="/login">Already Registered? Signin</Link></pre>
 				<button className="waves-effect waves-light btn purple darken-1"><i className="material-icons left">app_registration</i>Register</button>
-
 			</form>
   		</div>
 	)
