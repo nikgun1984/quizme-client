@@ -1,11 +1,11 @@
 import React, {useEffect, useCallback} from 'react';
-import { useForm, useWatch, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../validation/studySetSchema';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {Grid,Paper, Box} from '@material-ui/core';
+import {Grid,Box} from '@material-ui/core';
 import {IStudySet} from '../interfaces/studyset';
 
 
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const StudySetPage: React.FC<IPage> = props => {
 
     const classes = useStyles();
-	const { register, control,handleSubmit, formState: { errors } } = useForm({resolver: yupResolver(studySetSchema),});
+	const { register, control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
@@ -67,9 +67,9 @@ const StudySetPage: React.FC<IPage> = props => {
 		append({})
 	};
 
-	const createCard  = (e:React.SyntheticEvent): void => {
-		e.preventDefault();
-		console.log(fields)
+	const createCard  = (): void => {
+		// e.preventDefault();
+		// console.log(fields)
 		// const target= event.target as HTMLInputElement;
 		// const file:File = (target.files as FileList)[0]; // to extract image file 
 		// const fd = new FormData();
@@ -110,38 +110,40 @@ const StudySetPage: React.FC<IPage> = props => {
 								{errors.description?.message && <span className="helper-text red-text left-align">{errors.description?.message}</span>}
 							</div>
 						</Grid>
-						<p>Please add at least 2 flash cards</p>
+						{errors.cards?.message && <span className="helper-text red-text">{errors.cards?.message}</span>}
 
-						{fields.map(({id},idx)=>{
+						{fields.map((_,idx)=>{
 							return (
-								<div key={id} className={classes.boxBorder}>
+								<div key={idx} className={classes.boxBorder}>
 									<div className={classes.space}>
 										<p>{`FLASHCARD#${idx+1}`}</p>
-										<Grid item container spacing={4}>
+										<Grid item container spacing={2}>
 											<Grid item xs={12} lg={4}>
-												<Paper className={`${classes.paper} input-field`}>
+												<div className="input-field">
 													<input id="term" {...register(`cards.${idx}.term`)} type="text" className="validate" placeholder="Enter term" defaultValue=""/>
 													<label htmlFor="term" className="active">TERM</label>
-												</Paper>
+													{errors?.cards && errors?.cards[idx]?.term?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.term?.message}</span>}
+												</div>
 											</Grid>
-						
+						                    {/* {console.log(errors?.cards[idx].term)} */}
 											<Grid item xs={12} lg={4}>
-												<Paper className={`${classes.paper} input-field`}>
+												<div className="input-field">
 													<input id="definition" {...register(`cards.${idx}.definition` as const)} type="text" placeholder="Enter definition" defaultValue=""/>
 													<label htmlFor="definition" className="active">DEFINITION</label>
-												</Paper>
+													{errors?.cards && errors?.cards[idx]?.definition?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.definition?.message}</span>}
+												</div>
 											</Grid>
-											<Grid item xs={12} lg={2}>
-												<Paper className={`${classes.paper} input-field`}>
-													<input type="file" className={`validate ${classes.display}`} id="file" {...register(`cards.${idx}.img` as const)} defaultValue="" accept=".jpeg, .png"/>
-													<button onClick={createCard}><span className="material-icons">upload</span></button>
+											<Grid item xs={12} lg={3}>
+												<div className={`${classes.paper} input-field`}>
+													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} defaultValue="" accept=".jpeg, .png" />
+													{/* <button onClick={createCard}><span className="material-icons">upload</span></button> */}
 													<label htmlFor="file" className="active">IMAGE</label>
-												</Paper>
+												</div>
 											</Grid>
-											<Grid item xs={12} lg={2}>
-												<Paper className={`${classes.paper} input-field`}>
+											<Grid item xs={12} lg={1}>
+												<div className={`${classes.paper} input-field`}>
 													<button type="button" onClick={()=> remove(idx)}><span className="material-icons align-center">delete</span></button>
-												</Paper>
+												</div>
 											</Grid>
 										</Grid>
 									</div>
@@ -152,9 +154,9 @@ const StudySetPage: React.FC<IPage> = props => {
 							<div className={classes.space}>
 								<Grid item container spacing={4} justify="center">
 									<Grid item xs={12} lg={3}>
-										<Paper className={`${classes.paper} input-field`}>
+										<div className={`${classes.paper} input-field`}>
 											<button className="btn waves-effect waves-light purple darken-1" onClick={(e)=>addCard(e)}>Add Card<i className="material-icons left">add_box</i></button>
-										</Paper>
+										</div>
 									</Grid>
 								</Grid>
 							</div>

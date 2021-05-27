@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {ILoginForm} from '../interfaces/forms';
 import {loginSchema} from '../validation/loginSchema';
 import qlogo from '../qlogo.png';
+import { QuizmeApi } from '../api';
 
 const LoginPage: React.FC<IPage> = (props) => {
 
@@ -13,6 +14,13 @@ const LoginPage: React.FC<IPage> = (props) => {
 
 	const onSubmit = useCallback((formValues: ILoginForm) => {
     	console.log(formValues);
+		QuizmeApi.getAuthorization(formValues,'token')
+			.then((data) => {
+				console.log(data)
+			})
+			.catch((err) => {
+				console.log(err)
+			});
   	}, []);
 
 	useEffect(()=> {

@@ -6,6 +6,7 @@ import { IRegisterForm } from '../interfaces/forms';
 import {registerSchema} from '../validation/registerSchema';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { QuizmeApi } from '../api';
 
 
 const RegisterPage: React.FC<IPage> = props => {
@@ -13,15 +14,19 @@ const RegisterPage: React.FC<IPage> = props => {
 	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
     const onSubmit = useCallback((formValues: IRegisterForm) => {
     	console.log(formValues);
+		QuizmeApi.getAuthorization(formValues,'register')
+			.then((data) => {
+				console.log(data)
+			})
+			.catch((err) => {
+				console.log(err)
+			});
   	}, []);
-	
-	  async function signupUser() {
-        // send "values" to database
-    }
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
 	},[props.name])
+	
 	return (
 		<div className="row mt2">
 			<h3>Register</h3>
