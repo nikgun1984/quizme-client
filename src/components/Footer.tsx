@@ -1,6 +1,4 @@
 import React from 'react';
-import { NavLink,Link } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
 
 const Footer: React.FC= (props) => {
 	return (

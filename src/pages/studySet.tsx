@@ -60,6 +60,17 @@ const StudySetPage: React.FC<IPage> = props => {
 	})
 	const onSubmit = useCallback((formValues: IStudySet) => {
     	console.log(formValues);
+	    formValues.cards.forEach((card,idx)=>{
+			const reader = new FileReader();
+			let binaryImg;
+			console.log(card.img[0]);
+			reader.onloadend = () => {
+            	binaryImg = reader.result;
+				console.log(binaryImg);
+        	};
+            reader.readAsDataURL(card.img[0]);
+			console.log(reader);
+		})
   	}, []);
 
 	const addCard = (e:React.SyntheticEvent): void => {
@@ -135,8 +146,7 @@ const StudySetPage: React.FC<IPage> = props => {
 											</Grid>
 											<Grid item xs={12} lg={3}>
 												<div className={`${classes.paper} input-field`}>
-													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} defaultValue="" accept=".jpeg, .png" />
-													{/* <button onClick={createCard}><span className="material-icons">upload</span></button> */}
+													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} />
 													<label htmlFor="file" className="active">IMAGE</label>
 												</div>
 											</Grid>

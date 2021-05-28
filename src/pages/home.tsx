@@ -4,7 +4,7 @@ import logging from'../configs/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const HomePage: React.FC<IPage & RouteComponentProps<any>> = props => {
-	const [message, setMessage] = useState<string>('')
+	const [, setMessage] = useState<string>('')
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`);
 		let number = props.match.params.number;

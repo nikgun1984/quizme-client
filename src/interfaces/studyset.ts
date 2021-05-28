@@ -1,7 +1,7 @@
 export interface IFlashCard {
     term:string,
     definition:string;
-    img:string;
+    img:FileList;
 }
 
 export interface IStudySet {

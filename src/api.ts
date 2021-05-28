@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import {IRegisterForm} from './interfaces/forms';
+import {IToken} from './interfaces/apis';
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
@@ -25,7 +25,7 @@ const requests = {
 };
 
 export const QuizmeApi = {
-	getAuthorization: (formData:{}, url:string): Promise<IRegisterForm[]> => requests.post(`auth/${url}`,formData),
+	getAuthorization: (formData:{}, url:string): Promise<IToken> => requests.post(`auth/${url}`,formData),
 	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
 	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
 	// 	requests.post('posts', post),

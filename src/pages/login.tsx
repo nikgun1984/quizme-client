@@ -4,23 +4,27 @@ import logging from'../configs/logging';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {ILoginForm} from '../interfaces/forms';
+import { IToken } from '../interfaces/apis';
 import {loginSchema} from '../validation/loginSchema';
 import qlogo from '../qlogo.png';
 import { QuizmeApi } from '../api';
+import useLocalStorageState from '../hooks/useLocalStorageState';
+
 
 const LoginPage: React.FC<IPage> = (props) => {
 
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
-
+    const [token, setToken] = useLocalStorageState("token", "");
 	const onSubmit = useCallback((formValues: ILoginForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
-				console.log(data)
+				setToken(data.token);
 			})
 			.catch((err) => {
 				console.log(err)
 			});
+			console.log('now')
   	}, []);
 
 	useEffect(()=> {
