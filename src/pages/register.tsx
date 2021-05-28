@@ -1,5 +1,5 @@
-import React, {useEffect,useCallback} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect,useCallback,useContext} from 'react';
+import { Link,useHistory } from 'react-router-dom';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { IRegisterForm } from '../interfaces/forms';
@@ -8,18 +8,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { QuizmeApi } from '../api';
 import useLocalStorageState from '../hooks/useLocalStorageState';
+import AppContext from "../appContext";
+
 
 
 const RegisterPage: React.FC<IPage> = props => {
-
-	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
-	const [token, setToken] = useLocalStorageState("token", "");
-
+    const history = useHistory()
+ 	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
+	// const [token, setToken] = useLocalStorageState("token", "");
+    const { token, setToken } = useContext(AppContext);
     const onSubmit = useCallback((formValues: IRegisterForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
 				setToken(data.token);
+				history.push('/');
 			})
 			.catch((err) => {
 				console.log(err)

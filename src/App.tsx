@@ -4,13 +4,21 @@ import logging from './configs/logging';
 import routes from './configs/routes';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import AppContext from './appContext';
+import useLocalStorageState from './hooks/useLocalStorageState';
+import { MuiThemeProvider } from '@material-ui/core';
+import {theme} from './themes/theme';
 
 const App: React.FC<{}> = (props) => {
+  const [token, setToken] = useLocalStorageState("token", "");
+  console.log()
   useEffect(()=> {
     logging.info('Loading application...');
   },[])
   return (
+      <MuiThemeProvider theme={theme}>
       <BrowserRouter>
+      <AppContext.Provider value={{token, setToken}}>
         <NavBar />
         <div className="container center-align">
             <Switch>
@@ -33,7 +41,9 @@ const App: React.FC<{}> = (props) => {
             </Switch>
         </div>
         <Footer />
+        </AppContext.Provider>
       </BrowserRouter>
+      </MuiThemeProvider>
   );
 }
 

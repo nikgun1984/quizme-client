@@ -2,13 +2,12 @@
 import { useState, useEffect } from "react";
 
 type ReturnType<T> = [
-	T | undefined,
-	React.Dispatch<React.SetStateAction<T|undefined>>
+	T,
+	React.Dispatch<React.SetStateAction<T>>
 ]
 
 const useLocalStorageState = <T,>(key:string, defaultVal?:T):ReturnType<T> => {
-	const [state, setState] = useState<T | undefined>(() => {
-		if(!defaultVal) return;
+	const [state, setState] = useState<T>(() => {
 		try{
 			let value = localStorage.getItem(key);
 			return value?JSON.parse(value):defaultVal;

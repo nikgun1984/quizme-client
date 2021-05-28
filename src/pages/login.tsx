@@ -1,31 +1,34 @@
-import React, {useEffect,useCallback} from 'react';
+import React, {useEffect,useCallback,useContext} from 'react';
 import IPage from '../interfaces/page';
+import { useHistory } from 'react-router-dom';
+
 import logging from'../configs/logging';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {ILoginForm} from '../interfaces/forms';
-import { IToken } from '../interfaces/apis';
 import {loginSchema} from '../validation/loginSchema';
 import qlogo from '../qlogo.png';
 import { QuizmeApi } from '../api';
 import useLocalStorageState from '../hooks/useLocalStorageState';
+import AppContext from "../appContext";
 
 
 const LoginPage: React.FC<IPage> = (props) => {
-
+    const history = useHistory();
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
-    const [token, setToken] = useLocalStorageState("token", "");
+    const {token, setToken} = useContext(AppContext);
 	const onSubmit = useCallback((formValues: ILoginForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
 				setToken(data.token);
+				history.push("/");
 			})
 			.catch((err) => {
 				console.log(err)
 			});
 			console.log('now')
-  	}, []);
+  	}, [history, setToken]);
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
