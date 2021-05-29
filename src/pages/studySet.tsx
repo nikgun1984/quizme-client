@@ -1,12 +1,14 @@
-import React, {useEffect, useCallback} from 'react';
-import { useForm, useFieldArray } from "react-hook-form";
+import React, {useEffect, useCallback,useState} from 'react';
+import { useForm, useFieldArray, Controller} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../validation/studySetSchema';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {Grid,Box} from '@material-ui/core';
+import {Grid,Box,TextField} from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import {IStudySet} from '../interfaces/studyset';
+import ControlledAutocomplete from '../components/ControlledAutocomplete';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -53,11 +55,21 @@ const useStyles = makeStyles((theme: Theme) =>
 const StudySetPage: React.FC<IPage> = props => {
 
     const classes = useStyles();
-	const { register, control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
+	const [options, setOptions] = useState<string[]>([]);
+	const [open, setOpen] = useState<boolean>(false);
+    const loading = open && options.length === 0;
+	const { register, watch,control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
 	})
+
+	function sleep(delay = 0) {
+  		return new Promise((resolve) => {
+    		setTimeout(resolve, delay);
+ 		 });
+	}
+
 	const onSubmit = useCallback((formValues: IStudySet) => {
     	console.log(formValues);
 	    formValues.cards.forEach((card,idx)=>{
@@ -87,9 +99,31 @@ const StudySetPage: React.FC<IPage> = props => {
 		// fd.append('image',file,file.name);
         // send "values" to database
     }
+	const onChangeHandle = async (value:string) => {
+    // use the changed value to make request and then use the result. Which
+    console.log(value);
+    if(value){
+      const response = await fetch(
+      `https://api.datamuse.com/sug?s=${value}`
+    );
+    try{
+      const words = await response.json();
+      console.log(words);
+      setOptions(words.map((_:string, idx:string) => words[idx].word));
+    } catch(err){
+      console.log(err)
+    }
+    }
+    // setOptions(words.map((_, idx) => words[idx].word));
+  };
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
-	},[props.name])
+	},[props.name]);
+	useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
 	return (
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -107,7 +141,7 @@ const StudySetPage: React.FC<IPage> = props => {
 					</Grid>
 					</Box>
   					<Grid container spacing={2} direction="column">
-						<Grid item xs={12} lg={12}>
+						<Grid item xs={12} lg={12}>			
 							<div className="input-field">
 								<input id="title" {...register("title")} type="text" className="validate" placeholder="Enter your title in here..." defaultValue="" />
 								<label htmlFor="title" className="active">TITLE</label>
@@ -124,17 +158,20 @@ const StudySetPage: React.FC<IPage> = props => {
 						{errors.cards?.message && <span className="helper-text red-text">{errors.cards?.message}</span>}
 
 						{fields.map((_,idx)=>{
+							const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
+							console.log(watchFields);
 							return (
 								<div key={idx} className={classes.boxBorder}>
 									<div className={classes.space}>
 										<p>{`FLASHCARD#${idx+1}`}</p>
 										<Grid item container spacing={2}>
 											<Grid item xs={12} lg={4}>
-												<div className="input-field">
-													<input id="term" {...register(`cards.${idx}.term`)} type="text" className="validate" placeholder="Enter term" defaultValue=""/>
+												<ControlledAutocomplete options={options} control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} onChangeHandle={onChangeHandle}/>
+												{/* <div className="input-field">
+													<input id="term" {...register(`cards.${idx}.term`)} type="text" className="validate" placeholder="Enter term" defaultValue="" autoFocus/>
 													<label htmlFor="term" className="active">TERM</label>
 													{errors?.cards && errors?.cards[idx]?.term?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.term?.message}</span>}
-												</div>
+												</div> */}
 											</Grid>
 						                    {/* {console.log(errors?.cards[idx].term)} */}
 											<Grid item xs={12} lg={4}>
