@@ -1,11 +1,15 @@
 # React App -- QuizMe 
 
 Technologies:  
-- React.js. 
+- React.js (React and react-dom libraries)
 - React Testing Library. 
 - Typescript. 
 - Material UI. 
-- MaterializeCSS. 
+- MaterializeCSS.  
+- Yup -- cool tool for data verification
+- useForm API. -- very complex but very efficient form data
+- http://api.datamuse.com/ API  
+- https://responsivevoice.org/text-to-speech-languages/   
 
 ![alt text](sample.png)
 
