@@ -8,8 +8,9 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {Grid,Box,TextField} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {IStudySet} from '../interfaces/studyset';
-import ControlledAutocomplete from '../components/ControlledAutocomplete';
-
+import WordAutocomplete from '../components/WordAutocomplete';
+import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
+import {mousePressedEvent} from '../utilities/voiceover';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,14 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
 const StudySetPage: React.FC<IPage> = props => {
 
     const classes = useStyles();
-	const [options, setOptions] = useState<string[]>([]);
-	const [open, setOpen] = useState<boolean>(false);
-    const loading = open && options.length === 0;
-	const { register, watch,control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
+	const { register, watch,control,handleSubmit, formState: { errors }, getValues } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
 	})
+
 
 	function sleep(delay = 0) {
   		return new Promise((resolve) => {
@@ -70,23 +69,26 @@ const StudySetPage: React.FC<IPage> = props => {
  		 });
 	}
 
-	const onSubmit = useCallback((formValues: IStudySet) => {
+	const onSubmit = (formValues: IStudySet) => {
+		console.log('IM INSIDE HERE');
     	console.log(formValues);
-	    formValues.cards.forEach((card,idx)=>{
-			const reader = new FileReader();
-			let binaryImg;
-			console.log(card.img[0]);
-			reader.onloadend = () => {
-            	binaryImg = reader.result;
-				console.log(binaryImg);
-        	};
-            reader.readAsDataURL(card.img[0]);
-			console.log(reader);
-		})
-  	}, []);
+		
+	    // formValues.cards.forEach((card,idx)=>{
+		// 	const reader = new FileReader();
+		// 	let binaryImg;
+		// 	console.log(card.img[0]);
+		// 	reader.onloadend = () => {
+        //     	binaryImg = reader.result;
+		// 		console.log(binaryImg);
+        // 	};
+        //     reader.readAsDataURL(card.img[0]);
+		// 	console.log(reader);
+		// })
+  	};
 
 	const addCard = (e:React.SyntheticEvent): void => {
 		e.preventDefault();
+		console.log(fields);
 		append({})
 	};
 
@@ -99,34 +101,14 @@ const StudySetPage: React.FC<IPage> = props => {
 		// fd.append('image',file,file.name);
         // send "values" to database
     }
-	const onChangeHandle = async (value:string) => {
-    // use the changed value to make request and then use the result. Which
-    console.log(value);
-    if(value){
-      const response = await fetch(
-      `https://api.datamuse.com/sug?s=${value}`
-    );
-    try{
-      const words = await response.json();
-      console.log(words);
-      setOptions(words.map((_:string, idx:string) => words[idx].word));
-    } catch(err){
-      console.log(err)
-    }
-    }
-    // setOptions(words.map((_, idx) => words[idx].word));
-  };
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
-	},[props.name]);
-	useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
+		console.log(watch);
+		console.log(fields);
+	},[fields, props.name, watch]);
 	return (
 		<div className={classes.root}>
-				<form className="mt4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+				<form className="mt4" onSubmit={handleSubmit(onSubmit)}>
 					<Box m={5}>
 					<Grid item direction="column">
 							<Grid item xs={12} container>
@@ -136,6 +118,15 @@ const StudySetPage: React.FC<IPage> = props => {
 							<Grid item lg={6}/>
 							<Grid item xs={6} lg={3}>
 								<button className="waves-effect waves-light btn purple darken-1" type="submit"><i className="material-icons left">app_registration</i>Create</button>
+								{/* <button
+        type="button"
+        onClick={() => {
+          const values = getValues(); // { test: "test-input", test1: "test1-input" }
+          console.log(values)
+        }}
+      >
+        Get Values
+      </button> */}
 							</Grid>
 						</Grid>
 					</Grid>
@@ -157,29 +148,23 @@ const StudySetPage: React.FC<IPage> = props => {
 						</Grid>
 						{errors.cards?.message && <span className="helper-text red-text">{errors.cards?.message}</span>}
 
-						{fields.map((_,idx)=>{
+						{fields.map((field,idx)=>{
 							const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
 							console.log(watchFields);
 							return (
-								<div key={idx} className={classes.boxBorder}>
+								<div key={field.id} className={classes.boxBorder}>
 									<div className={classes.space}>
 										<p>{`FLASHCARD#${idx+1}`}</p>
-										<Grid item container spacing={2}>
+										<Grid item container spacing={2} alignItems="center" justify="center">
 											<Grid item xs={12} lg={4}>
-												<ControlledAutocomplete options={options} control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} onChangeHandle={onChangeHandle}/>
-												{/* <div className="input-field">
-													<input id="term" {...register(`cards.${idx}.term`)} type="text" className="validate" placeholder="Enter term" defaultValue="" autoFocus/>
-													<label htmlFor="term" className="active">TERM</label>
-													{errors?.cards && errors?.cards[idx]?.term?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.term?.message}</span>}
-												</div> */}
+												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx}/>
+												 {/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 											</Grid>
-						                    {/* {console.log(errors?.cards[idx].term)} */}
 											<Grid item xs={12} lg={4}>
 												<div className="input-field">
-													<input id="definition" {...register(`cards.${idx}.definition` as const)} type="text" placeholder="Enter definition" defaultValue=""/>
-													<label htmlFor="definition" className="active">DEFINITION</label>
-													{errors?.cards && errors?.cards[idx]?.definition?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.definition?.message}</span>}
-												</div>
+													<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx}/>
+													{/* {watchFields[1] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
+            									</div>
 											</Grid>
 											<Grid item xs={12} lg={3}>
 												<div className={`${classes.paper} input-field`}>

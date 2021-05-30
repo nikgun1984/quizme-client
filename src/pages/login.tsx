@@ -11,7 +11,7 @@ import qlogo from '../qlogo.png';
 import { QuizmeApi } from '../api';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 import AppContext from "../appContext";
-
+import {mousePressedEvent} from '../utilities/voiceover';
 
 const LoginPage: React.FC<IPage> = (props) => {
     const history = useHistory();
@@ -21,8 +21,11 @@ const LoginPage: React.FC<IPage> = (props) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
+				console.log(formValues);
+				console.log(data.username)
 				setToken(data.token);
 				history.push("/");
+				window.responsiveVoice.speak(`Welcome back ${data.username}`,"US English Male")
 			})
 			.catch((err) => {
 				console.log(err)
