@@ -9,7 +9,7 @@ Technologies:
 - Yup -- cool tool for data verification
 - useForm API. -- very complex but very efficient form data
 - http://api.datamuse.com/ API  
-- https://responsivevoice.org/text-to-speech-languages/   
+- https://responsivevoice.org/text-to-speech-languages/ API. 
 
 ![alt text](sample.png)
 
