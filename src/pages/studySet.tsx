@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const StudySetPage: React.FC<IPage> = props => {
 
     const classes = useStyles();
-	const { register, watch,control,handleSubmit, formState: { errors }, getValues } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
+	const { register, watch,control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
@@ -71,14 +71,15 @@ const StudySetPage: React.FC<IPage> = props => {
 
 	const onSubmit = (formValues: IStudySet) => {
 		console.log('IM INSIDE HERE');
-    	console.log(formValues);
-		getLinks(formValues.cards);
-        console.log(formValues);
+    	// console.log(formValues);
+		// getLinks(formValues.cards);
+        // console.log(formValues);
 		// let formData = new FormData();
 		// formData.append('title',formValues.title);
 		// formData.append('description',formValues.description);
 		// formData.append('cards',JSON.stringify(formValues));
-		QuizmeApi.createStudyForm(JSON.stringify({data:formValues}),'')
+		console.log(formValues);
+		QuizmeApi.createStudyForm(formValues,'')
 			.then((data) => {
 				console.log(data)
 			})
@@ -121,7 +122,7 @@ const StudySetPage: React.FC<IPage> = props => {
 	},[fields, props.name, watch]);
 	return (
 		<div className={classes.root}>
-				<form className="mt4" onSubmit={handleSubmit(onSubmit)}>
+				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
 					<Box m={5}>
 					<Grid item direction="column">
 							<Grid item xs={12} container>
@@ -131,15 +132,6 @@ const StudySetPage: React.FC<IPage> = props => {
 							<Grid item lg={6}/>
 							<Grid item xs={6} lg={3}>
 								<button className="waves-effect waves-light btn purple darken-1" type="submit"><i className="material-icons left">app_registration</i>Create</button>
-								{/* <button
-        type="button"
-        onClick={() => {
-          const values = getValues(); // { test: "test-input", test1: "test1-input" }
-          console.log(values)
-        }}
-      >
-        Get Values
-      </button> */}
 							</Grid>
 						</Grid>
 					</Grid>
