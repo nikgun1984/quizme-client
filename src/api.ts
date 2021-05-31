@@ -13,6 +13,11 @@ import {IToken} from './interfaces/apis';
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
 	timeout: 15000,
+	// withCredentials: true,
+	headers: {
+		'Content-Type': 'application/json',
+		Authorization: `Bearer ${localStorage.getItem('token')}`
+	}
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -26,6 +31,7 @@ const requests = {
 
 export const QuizmeApi = {
 	getAuthorization: (formData:{}, url:string): Promise<IToken> => requests.post(`auth/${url}`,formData),
+	createStudyForm:  (formData:{}, url:string): Promise<IToken> => requests.post(`studysets`,formData)
 	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
 	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
 	// 	requests.post('posts', post),

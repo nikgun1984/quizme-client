@@ -1,16 +1,16 @@
-import React, {useEffect, useCallback,useState} from 'react';
-import { useForm, useFieldArray, Controller} from "react-hook-form";
+import React, {useEffect} from 'react';
+import { useForm, useFieldArray} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../validation/studySetSchema';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {Grid,Box,TextField} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import {Grid,Box} from '@material-ui/core';
 import {IStudySet} from '../interfaces/studyset';
 import WordAutocomplete from '../components/WordAutocomplete';
 import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
-import {mousePressedEvent} from '../utilities/voiceover';
+import { QuizmeApi } from '../api';
+import {getLinks} from '../utilities/uploadImages';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,7 +72,20 @@ const StudySetPage: React.FC<IPage> = props => {
 	const onSubmit = (formValues: IStudySet) => {
 		console.log('IM INSIDE HERE');
     	console.log(formValues);
-		
+		getLinks(formValues.cards);
+        console.log(formValues);
+		// let formData = new FormData();
+		// formData.append('title',formValues.title);
+		// formData.append('description',formValues.description);
+		// formData.append('cards',JSON.stringify(formValues));
+		QuizmeApi.createStudyForm(JSON.stringify({data:formValues}),'')
+			.then((data) => {
+				console.log(data)
+			})
+			.catch((err) => {
+				console.log(err)
+			});
+
 	    // formValues.cards.forEach((card,idx)=>{
 		// 	const reader = new FileReader();
 		// 	let binaryImg;
@@ -156,7 +169,7 @@ const StudySetPage: React.FC<IPage> = props => {
 									<div className={classes.space}>
 										<p>{`FLASHCARD#${idx+1}`}</p>
 										<Grid item container spacing={2} alignItems="center" justify="center">
-											<Grid item xs={12} lg={4}>
+											<Grid item xs={12} lg={3}>
 												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx}/>
 												 {/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 											</Grid>
@@ -167,9 +180,18 @@ const StudySetPage: React.FC<IPage> = props => {
             									</div>
 											</Grid>
 											<Grid item xs={12} lg={3}>
-												<div className={`${classes.paper} input-field`}>
+												{/* <div className={`${classes.paper} input-field`}>
 													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} />
 													<label htmlFor="file" className="active">IMAGE</label>
+												</div> */}
+												<div className="file-field input-field">
+													<div className="btn purple darken-1">
+														<span>Image</span>
+														<input type="file" id="file" {...register(`cards.${idx}.img` as const)}/>
+													</div>
+													<div className="file-path-wrapper">
+														<input className="file-path validate" type="text" value="uploaded"/>
+													</div>
 												</div>
 											</Grid>
 											<Grid item xs={12} lg={1}>

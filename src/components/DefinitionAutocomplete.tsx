@@ -15,7 +15,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx }:{word:
         try{
           const data = await response.json();
 		  if(data){
-			const defs = data[0].defs;
+			const defs = data[0].defs || [];
 			setDefinitions(defs);
 		  }
         } catch(err){

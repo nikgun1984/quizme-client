@@ -6,8 +6,8 @@ type ReturnType<T> = [
 	React.Dispatch<React.SetStateAction<T>>
 ]
 
-const useLocalStorageState = <T,>(key:string, defaultVal?:T):ReturnType<T> => {
-	const [state, setState] = useState<T>(() => {
+const useLocalStorageState = (key:string, defaultVal?:string):ReturnType<string> => {
+	const [state, setState] = useState<string>(() => {
 		try{
 			let value = localStorage.getItem(key);
 			return value?JSON.parse(value):defaultVal;
@@ -17,7 +17,7 @@ const useLocalStorageState = <T,>(key:string, defaultVal?:T):ReturnType<T> => {
 	});
 
 	useEffect(() => {
-		localStorage.setItem(key, JSON.stringify(state));
+		localStorage.setItem(key, state);
 	});
 
 	return [state, setState];
