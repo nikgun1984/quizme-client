@@ -21,10 +21,11 @@ Technologies:
 - Verifications for forms with Yup
 - Autocomplete with forms
 - Design anf themes for the app
-- Voice for study sets
+- Voice for study sets. 
+- Firebase to store images. 
+- Studyset submission
 
 # NEXT TO-DO
-- Studyset submission
 - Displaying sets
 - Searching for other sets
 - Study/Game/Quizzes for sets
