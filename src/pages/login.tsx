@@ -9,29 +9,25 @@ import {ILoginForm} from '../interfaces/forms';
 import {loginSchema} from '../validation/loginSchema';
 import qlogo from '../qlogo.png';
 import { QuizmeApi } from '../api';
-import useLocalStorageState from '../hooks/useLocalStorageState';
 import AppContext from "../appContext";
-import {mousePressedEvent} from '../utilities/voiceover';
 
 const LoginPage: React.FC<IPage> = (props) => {
     const history = useHistory();
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
-    const {token, setToken} = useContext(AppContext);
+    const {setToken,setUsername} = useContext(AppContext);
 	const onSubmit = useCallback((formValues: ILoginForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
-				console.log(formValues);
-				console.log(data.username)
 				setToken(data.token);
 				history.push("/");
-				window.responsiveVoice.speak(`Welcome back ${data.username}`,"US English Male")
+				window.responsiveVoice.speak(`Welcome back ${data.username}`,"US English Male");
+				setUsername(data.username!)
 			})
 			.catch((err) => {
 				console.log(err)
 			});
-			console.log('now')
-  	}, [history, setToken]);
+  	}, [history, setToken, setUsername]);
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)

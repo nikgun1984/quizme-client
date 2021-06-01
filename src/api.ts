@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import {IToken} from './interfaces/apis';
+import {IStudySetsResponse} from  './interfaces/apis';
+
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
@@ -12,7 +14,7 @@ import {IToken} from './interfaces/apis';
 
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
-	timeout: 15000,
+	// timeout: 15000,
 	// withCredentials: true,
 	headers: {
 		'Content-Type': 'application/json',
@@ -31,7 +33,8 @@ const requests = {
 
 export const QuizmeApi = {
 	getAuthorization: (formData:{}, url:string): Promise<IToken> => requests.post(`auth/${url}`,formData),
-	createStudyForm:  (formData:{}, url:string): Promise<IToken> => requests.post(`studysets`,formData)
+	createStudyForm:  (formData:{}, url:string): Promise<IToken> => requests.post(`studysets`,formData),
+	getMyStudysets: (url:string): Promise<any> => requests.get(`studysets/${url}`),
 	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
 	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
 	// 	requests.post('posts', post),

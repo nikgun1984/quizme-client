@@ -1,6 +1,8 @@
 export interface GlobalContent {
-	token: string | undefined
-	setToken: (c: string) => void
+	token: string | undefined,
+	setToken: (c: string) => void,
+    username: string,
+    setUsername: (c: string) => void
 }
 
 // Necessary to load global voice to work

@@ -11,14 +11,14 @@ import {theme} from './themes/theme';
 
 const App: React.FC<{}> = (props) => {
   const [token, setToken] = useLocalStorageState("token", "");
-  console.log()
+  const [username,setUsername] = useLocalStorageState("username", "")
   useEffect(()=> {
     logging.info('Loading application...');
   },[])
   return (
       <MuiThemeProvider theme={theme}>
       <BrowserRouter>
-      <AppContext.Provider value={{token, setToken}}>
+      <AppContext.Provider value={{token, setToken,username,setUsername}}>
         <NavBar />
         <div className="container center-align">
             <Switch>

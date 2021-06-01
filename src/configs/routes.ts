@@ -3,7 +3,7 @@ import HomePage from '../pages/home';
 import LoginPage from '../pages/login';
 import RegisterPage from '../pages/register';
 import StudySetPage from '../pages/studySet';
-// import UserPage from '../pages/user';
+import MyStudySetsPage from '../pages/myStudySets';
 
 const routes: IRoute[] = [
 	{
@@ -31,6 +31,13 @@ const routes: IRoute[] = [
 		path: '/create-set',
 		name: 'Study Set Page',
 		component: StudySetPage,
+		exact: true,
+		protected: true
+	},
+	{
+		path: '/my-sets',
+		name: 'Own Sets Page',
+		component: MyStudySetsPage,
 		exact: true,
 		protected: true
 	},

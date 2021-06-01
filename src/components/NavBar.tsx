@@ -34,6 +34,7 @@ const NavBar: React.FC = () => {
     history.push("/login");
     setToken('');
   }
+
 	return (
     <>
       <nav>
@@ -65,7 +66,7 @@ const NavBar: React.FC = () => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
       >
-          <MenuItem className={classes.fontColor}>My Studysets</MenuItem>
+          <MenuItem className={classes.fontColor} component={Link} to='/my-sets'>My Studysets</MenuItem>
           <MenuItem className={classes.fontColor}>My Favorite Studysets</MenuItem>
           <MenuItem className={classes.fontColor} onClick={handleLogout}>Log Out</MenuItem>
       </Menu>

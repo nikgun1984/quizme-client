@@ -27,7 +27,7 @@ const RegisterPage: React.FC<IPage> = props => {
 			.catch((err) => {
 				console.log(err)
 			});
-  	}, [setToken]);
+  	}, [history, setToken]);
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
