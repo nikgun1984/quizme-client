@@ -23,10 +23,10 @@ Technologies:
 - Design anf themes for the app
 - Voice for study sets. 
 - Firebase to store images. 
-- Studyset submission
+- Studyset submission.  
+- Displaying sets
 
 # NEXT TO-DO
-- Displaying sets
 - Searching for other sets
 - Study/Game/Quizzes for sets
 - Maybe Testing if I got time
