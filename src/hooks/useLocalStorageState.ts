@@ -1,26 +1,16 @@
 /* Save Simple Data to dataStorage */
 import { useState, useEffect } from "react";
 
-type ReturnType<T> = [
-	T,
-	React.Dispatch<React.SetStateAction<T>>
-]
-
-const useLocalStorageState = (key:string, defaultVal?:string):ReturnType<string> => {
+const useLocalStorageState = (key:string,defaultVal:string) => {
 	const [state, setState] = useState<string>(() => {
-		try{
-			let value = localStorage.getItem(key);
-			return value?JSON.parse(value):defaultVal;
-		} catch(error){
-			return defaultVal;
-		}
+		return localStorage.getItem(key) || defaultVal;
 	});
 
 	useEffect(() => {
 		localStorage.setItem(key, state);
-	});
+	},[key,state]);
 
-	return [state, setState];
+	return [state, setState] as const;
 };
 
 export default useLocalStorageState;

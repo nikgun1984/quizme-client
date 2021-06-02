@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import { useHistory } from 'react-router';
 import { useForm, useFieldArray} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../validation/studySetSchema';
@@ -52,22 +53,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 const StudySetPage: React.FC<IPage> = props => {
-
+    const history = useHistory();
     const classes = useStyles();
 	const { register, watch,control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
 	})
-
-
-	function sleep(delay = 0) {
-  		return new Promise((resolve) => {
-    		setTimeout(resolve, delay);
- 		 });
-	}
 
 	const onSubmit = (formValues: IStudySet) => {
 		console.log('IM INSIDE HERE');
@@ -82,6 +75,7 @@ const StudySetPage: React.FC<IPage> = props => {
 		QuizmeApi.createStudyForm(formValues,'')
 			.then((data) => {
 				console.log(data)
+				history.push('/studysets')
 			})
 			.catch((err) => {
 				console.log(err)

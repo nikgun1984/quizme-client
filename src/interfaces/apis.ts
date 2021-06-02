@@ -3,10 +3,6 @@ export interface IToken {
     username?: string
 }
 
-export interface IStudySetsResponse{
-    studySets:IStudySetResponse[]
-}
-
 export interface IStudySetResponse {
 	id: string
 	title: string,

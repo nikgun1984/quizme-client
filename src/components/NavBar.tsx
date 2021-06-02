@@ -30,7 +30,7 @@ const NavBar: React.FC = () => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    setAnchorEl(null);
+    handleMenuClose();
     history.push("/login");
     setToken('');
   }
@@ -66,8 +66,8 @@ const NavBar: React.FC = () => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
       >
-          <MenuItem className={classes.fontColor} component={Link} to='/my-sets'>My Studysets</MenuItem>
-          <MenuItem className={classes.fontColor}>My Favorite Studysets</MenuItem>
+          <MenuItem className={classes.fontColor} onClick={handleMenuClose} component={Link} to='/studysets'>My Studysets</MenuItem>
+          <MenuItem className={classes.fontColor} onClick={handleMenuClose}>My Favorite Studysets</MenuItem>
           <MenuItem className={classes.fontColor} onClick={handleLogout}>Log Out</MenuItem>
       </Menu>
     </>

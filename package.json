@@ -5,6 +5,7 @@
 	"dependencies": {
 		"@hookform/resolvers": "^2.5.1",
 		"@material-ui/core": "^4.11.4",
+		"@material-ui/icons": "^4.11.2",
 		"@material-ui/lab": "^4.0.0-alpha.58",
 		"@testing-library/jest-dom": "^5.11.4",
 		"@testing-library/react": "^11.1.0",
@@ -17,8 +18,11 @@
 		"firebase": "^8.6.3",
 		"formik": "^2.2.8",
 		"react": "^17.0.2",
+		"react-card-flip": "^1.1.1",
+		"react-confetti": "^6.0.1",
 		"react-dom": "^17.0.2",
 		"react-hook-form": "^7.6.6",
+		"react-material-ui-carousel": "^2.2.6",
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "4.0.3",
 		"typescript": "^4.1.2",
@@ -54,5 +58,6 @@
 		"@types/material-ui": "^0.21.8",
 		"@types/react-router-dom": "^5.1.7",
 		"@types/uuid": "^8.3.0"
-	}
+	},
+	"proxy": "http://localhost:3001/studysets/mark.curry123"
 }
