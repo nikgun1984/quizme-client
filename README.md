@@ -10,6 +10,7 @@ Technologies:
 - useForm API. -- very complex but very efficient form data
 - http://api.datamuse.com/ API  
 - https://responsivevoice.org/text-to-speech-languages/ API. 
+- Firebase Cloud Service
 
 ![alt text](sample.png)
 
@@ -24,10 +25,12 @@ Technologies:
 - Voice for study sets. 
 - Firebase to store images. 
 - Studyset submission.  
-- Displaying sets
+- Displaying sets.  
+- Study sets by using flashcards:
+  - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards
 
 # NEXT TO-DO
 - Searching for other sets
-- Study/Game/Quizzes for sets
+- Game/Quizzes for sets
 - Maybe Testing if I got time
 
