@@ -10,6 +10,7 @@ Technologies:
 - useForm API. -- very complex but very efficient form data
 - http://api.datamuse.com/ API  
 - https://responsivevoice.org/text-to-speech-languages/ API. 
+- Firebase Cloud Service
 
 ![alt text](sample.png)
 
