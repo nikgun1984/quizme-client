@@ -115,6 +115,18 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
                   color="primary"
                   variant="outlined"
                   size="small"
+                  className={classes.margin}
+                  component={Link} 
+                  to={`/studysets/${id}/memorygame`}
+                >
+                  Memory Game{" "}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  size="small"
                   className={classes.edit}
                 >
                   Edit{" "}

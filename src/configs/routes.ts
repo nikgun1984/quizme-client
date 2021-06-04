@@ -4,7 +4,8 @@ import LoginPage from '../pages/login';
 import RegisterPage from '../pages/register';
 import StudySetPage from '../pages/studySet';
 import MyStudySetsPage from '../pages/myStudySets';
-import PracticeSet from '../pages/practicePage'
+import PracticeSet from '../pages/practicePage';
+import GamePage from '../pages/game';
 
 const routes: IRoute[] = [
 	{
@@ -32,6 +33,13 @@ const routes: IRoute[] = [
 		path: '/create-set',
 		name: 'Study Set Page',
 		component: StudySetPage,
+		exact: true,
+		protected: true
+	},
+	{
+		path: '/studysets/:id/memorygame',
+		name: 'Memory Game',
+		component: GamePage,
 		exact: true,
 		protected: true
 	},
