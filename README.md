@@ -28,10 +28,11 @@ Technologies:
 - Displaying sets.  
 - Study sets by using flashcards:
   - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards.  
+- Memory Game with Words. 
 
 # NEXT TO-DO
 - Searching for other sets
-- Game/Quizzes for sets
+- Quizzes for sets
 - Maybe Testing if I got time. 
 
 Other Illustrations:  
