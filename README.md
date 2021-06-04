@@ -27,10 +27,19 @@ Technologies:
 - Studyset submission.  
 - Displaying sets.  
 - Study sets by using flashcards:
-  - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards
+  - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards.  
 
 # NEXT TO-DO
 - Searching for other sets
 - Game/Quizzes for sets
-- Maybe Testing if I got time
+- Maybe Testing if I got time. 
+
+Other Illustrations:  
+Creation of Studyset that consists of flashcards:
+![alt text](sample2.png). 
+Studysets that the user has.  
+![alt text](sample3.png)
+Study and Practice your topics with cool graphical interface:  
+![alt text](sample4.png)
+
 
