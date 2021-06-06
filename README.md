@@ -10,7 +10,8 @@ Technologies:
 - useForm API. -- very complex but very efficient form data
 - http://api.datamuse.com/ API  
 - https://responsivevoice.org/text-to-speech-languages/ API. 
-- Firebase Cloud Service
+- Firebase Cloud Service. 
+- Redux/Thunk
 
 ![alt text](sample.png)
 
@@ -28,7 +29,8 @@ Technologies:
 - Displaying sets.  
 - Study sets by using flashcards:
   - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards.  
-- Memory Game with Words. 
+- Memory Game with Words.  
+- Created Redux Store for easier access of user's subsets
 
 # NEXT TO-DO
 - Searching for other sets
