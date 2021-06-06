@@ -3,6 +3,10 @@ export interface IToken {
     username?: string
 }
 
+export interface IPracticeComponent {
+  cards: IResponseFlashCard[]
+}
+
 export interface IStudySetResponse {
 	id: string
 	title: string,

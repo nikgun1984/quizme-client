@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       height: "140px",
       width: "100%"
-    },
-    done: {
-      pointerEvents: "none"
     }
   })
 );

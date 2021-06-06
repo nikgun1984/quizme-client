@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react';
 import { useParams } from "react-router-dom";
 import { QuizmeApi } from '../api';
 import {IStudySetResponse} from '../interfaces/apis';
-import PracticeComponent from '../components/PracticeComponent';
+import PracticeComponent from '../components/practice/PracticeComponent';
 
 type ParamTypes = {
 	id: string

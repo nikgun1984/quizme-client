@@ -8,13 +8,22 @@ import AppContext from './appContext';
 import useLocalStorageState from './hooks/useLocalStorageState';
 import { MuiThemeProvider } from '@material-ui/core';
 import {theme} from './themes/theme';
+import {useDispatch} from "react-redux";
+import {getUserStudySets} from "./state/actions/studysetActions"
 
 const App: React.FC<{}> = (props) => {
+  const dispatch = useDispatch();
   const [token, setToken] = useLocalStorageState("token", "");
-  const [username,setUsername] = useLocalStorageState("username", "")
+  const [username,setUsername] = useLocalStorageState("username", "");
+  
+  // Lets load application
   useEffect(()=> {
     logging.info('Loading application...');
-  },[])
+    if(username){
+      dispatch(getUserStudySets(username));
+    }
+  },[username,dispatch])
+
   return (
       <MuiThemeProvider theme={theme}>
       <BrowserRouter>

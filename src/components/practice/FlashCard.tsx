@@ -3,33 +3,12 @@ import ReactCardFlip from "react-card-flip";
 import Confetti from "react-confetti";
 import VolumeDownRoundedIcon from '@material-ui/icons/VolumeDownRounded';
 import { Paper, Button } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import {useStyles} from './useStyles';
 
 type IFlashCard  = {
 	term:string;
 	definition: string;
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper2: {
-      height: 300,
-      padding: theme.spacing(2)
-    },
-    center: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "350px",
-      width: "100%"
-    },
-    buttonStyle: {
-      color: "#663399",
-      borderColor: "#663399"
-    }
-  })
-);
 
 const FlashCard:React.FC<IFlashCard> = (props) => {
   const classes = useStyles(); 

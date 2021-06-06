@@ -77,9 +77,8 @@ export default function MemoryGame() {
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
           {cards.map((card,idx) => (
-            <Grid item>
+            <Grid item key={idx}>
               <FlashCard
-                key={idx}
                 card={card}
                 index={idx}
                 isFlipped={checkIsFlipped(idx)}

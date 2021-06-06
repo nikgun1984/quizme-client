@@ -1,57 +1,14 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Paper, Button, Grid, Box, Typography } from "@material-ui/core";
 import Carousel from "react-material-ui-carousel";
-import LinearWithValueLabel from "./LinearWithValueLabel";
-import {IResponseFlashCard} from "../interfaces/apis";
+import LinearWithValueLabel from "../LinearWithValueLabel";
+import {IPracticeComponent} from "../../interfaces/apis";
 import FlashCard from "./FlashCard";
+import {useStyles} from './useStyles';
 
-type PracticeComponentProps = {
-  cards: IResponseFlashCard[]
-}
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1
-    },
-    paper1: {
-      height: 140,
-      padding: theme.spacing(2)
-    },
-    paper2: {
-      height: 300,
-      padding: theme.spacing(2)
-    },
-    paper3: {
-      height: 330,
-      padding: theme.spacing(2),
-      backgroundColor: "purple"
-    },
-    paper4: {
-      height: 170,
-      padding: theme.spacing(2),
-      backgroundColor: "purple"
-    },
-    control: {
-      padding: theme.spacing(2)
-    },
-    center: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "350px",
-      width: "100%"
-    },
-    buttonStyle: {
-      color: "#663399",
-      borderColor: "#663399"
-    }
-  })
-);
-
-const PracticeComponent:React.FC<PracticeComponentProps> = ({cards}) => {
+const PracticeComponent:React.FC<IPracticeComponent> = ({cards}) => {
   const classes = useStyles();
+  console.log(cards)
   return (
     <Box m={2}>
       <Grid container className={classes.root} spacing={2}>
