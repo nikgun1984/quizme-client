@@ -2,34 +2,36 @@ import Grid from "@material-ui/core/Grid";
 import {useState, useEffect,useRef} from 'react';
 import FlashCard from "./FlashCard";
 import useStyles from "./useStyles";
-import {ICard,IMemoryCard} from '../../interfaces/cardGames';
+import {IMemoryCard,ICard} from '../../interfaces/cardGames';
+import {IPracticeComponent,IResponseFlashCard} from '../../interfaces/apis';
+
 import {shuffle,getRandomCards,getAllCards} from '../../utilities/shuffleCards';
 
-const items:ICard[] = [
-    { term: "hello", definition: "greeting", id: "3" },
-    { term: "bye", definition: "farewell remark", id: "4" },
-    { term: "carrot", definition: "orange edible root", id: "6" },
-    {
-      term: "mother",
-      definition: "a woman who gave a birth to a child",
-      id: "7"
-    },
-    { term: "pill", definition: "a small medicine in form of pillet", id: "8" },
-    {
-      term: "paper",
-      definition: "material made out of cellulose pulp",
-      id: "9"
-    }
-];
+// const items:ICard[] = [
+//     { term: "hello", definition: "greeting", id: "3" },
+//     { term: "bye", definition: "farewell remark", id: "4" },
+//     { term: "carrot", definition: "orange edible root", id: "6" },
+//     {
+//       term: "mother",
+//       definition: "a woman who gave a birth to a child",
+//       id: "7"
+//     },
+//     { term: "pill", definition: "a small medicine in form of pillet", id: "8" },
+//     {
+//       term: "paper",
+//       definition: "material made out of cellulose pulp",
+//       id: "9"
+//     }
+// ];
 
-export default function MemoryGame() {
+const MemoryGame:React.FC<IPracticeComponent> = (props:IPracticeComponent) => {
   const classes = useStyles();
   const timeout = useRef<NodeJS.Timeout>();
 
-  const [cards, setCards] = useState<IMemoryCard[]>(() => {
-    const shuffledCards = shuffle(items);
-    getRandomCards(shuffledCards);
-    return getAllCards(shuffledCards);
+  const [cards, setCards] = useState(() => {
+      const shuffledCards = props.cards?shuffle<IResponseFlashCard>(props.cards):[];
+      getRandomCards(shuffledCards);
+      return getAllCards(shuffledCards);
   });
 
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([]);
@@ -92,4 +94,6 @@ export default function MemoryGame() {
     </Grid>
   );
 }
+
+export default MemoryGame;
 

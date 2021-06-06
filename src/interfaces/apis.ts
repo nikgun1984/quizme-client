@@ -4,7 +4,7 @@ export interface IToken {
 }
 
 export interface IPracticeComponent {
-  cards: IResponseFlashCard[]
+  cards: IResponseFlashCard[] | undefined
 }
 
 export interface IStudySetResponse {

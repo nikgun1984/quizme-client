@@ -24,7 +24,7 @@ const PracticeComponent:React.FC<IPracticeComponent> = ({cards}) => {
             <Grid item md={9} xs={12}>
               <Paper className={classes.paper3} variant="outlined">
                 <Carousel autoPlay={false} animation="slide" indicators={false}>
-                  {cards.map((card) => (
+                  {cards?.map((card) => (
                     <FlashCard key={card.id} term={card.term} definition={card.definition}/>
                   ))}
                 </Carousel>

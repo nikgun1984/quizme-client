@@ -1,4 +1,5 @@
 import {ICard,IMemoryCard} from '../interfaces/cardGames';
+import {IResponseFlashCard} from '../interfaces/apis';
 
 export function shuffle<T>(array:T[]):T[] {
   const copy = array.slice(0);
@@ -6,7 +7,7 @@ export function shuffle<T>(array:T[]):T[] {
   return copy;
 }
 
-export function getRandomCards(shuffledArr:ICard[]):void {
+export function getRandomCards(shuffledArr:IResponseFlashCard[]):void {
   if (shuffledArr.length > 6) {
     shuffledArr.slice(0, 6);
   } else {
@@ -14,7 +15,7 @@ export function getRandomCards(shuffledArr:ICard[]):void {
   }
 }
 
-export function getAllCards(randomArray:ICard[]):IMemoryCard[] {
+export function getAllCards(randomArray:IResponseFlashCard[]):IMemoryCard[] {
   const cards:IMemoryCard[] = [];
   const colors = [
     "#8F00FF",
@@ -25,11 +26,10 @@ export function getAllCards(randomArray:ICard[]):IMemoryCard[] {
     "#E1A6F7"
   ];
   randomArray.forEach((el, idx) => {
-    cards.push({ expr: el.term, id: el.id, match: false, color: colors[idx] });
+    cards.push({ expr: el.term, id: el.id, color: colors[idx] });
     cards.push({
       expr: el.definition,
       id: el.id,
-      match: false,
       color: colors[idx]
     });
   });
