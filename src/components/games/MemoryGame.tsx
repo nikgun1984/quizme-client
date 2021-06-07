@@ -2,26 +2,30 @@ import Grid from "@material-ui/core/Grid";
 import {useState, useEffect,useRef} from 'react';
 import FlashCard from "./FlashCard";
 import useStyles from "./useStyles";
-import {IMemoryCard,ICard} from '../../interfaces/cardGames';
-import {IPracticeComponent,IResponseFlashCard} from '../../interfaces/apis';
+import {useSelector} from "react-redux";
+import { RootStore } from '../../state/store';
+import {IMemoryCard} from '../../interfaces/cardGames';
+import {IResponseFlashCard} from '../../interfaces/apis';
 import {shuffle,getRandomCards,getAllCards} from '../../utilities/shuffleCards';
 
-const MemoryGame:React.FC<IPracticeComponent> = (props:IPracticeComponent) => {
+type IRarams = {
+  id:string;
+}
+
+const MemoryGame:React.FC<IRarams> = ({id}) => {
+  const studysets = useSelector((state: RootStore) => state.studysets.studysets);
+  const cards = studysets?.filter(el=>+el.id === +id)[0].cards;
   const classes = useStyles();
   const timeout = useRef<NodeJS.Timeout>();
 
-  const [cards, setCards] = useState(() => {
-      const shuffledCards = props.cards?shuffle<IResponseFlashCard>(props.cards):[];
-      getRandomCards(shuffledCards);
-      return getAllCards(shuffledCards);
-  });
-
+  const [flashcards, setFlashcards] = useState<IMemoryCard[]>([]);
+  // console.log(flashcards[5].id);
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([]);
   const [flipped, setFlipped] = useState<boolean[]>(new Array(12).fill(false));
 
   const checking = () => {
     const [firstCard, secondCard] = flippedIndexes;
-    if (cards[firstCard].id === cards[secondCard].id) {
+    if (flashcards[firstCard].id === flashcards[secondCard].id) {
       setFlipped(arr=>arr.map((el,idx)=>idx===firstCard || idx ===secondCard?true:el ))
       setFlippedIndexes([]);
       return;
@@ -56,11 +60,21 @@ const MemoryGame:React.FC<IPracticeComponent> = (props:IPracticeComponent) => {
     };
   }, [flippedIndexes]);
 
+  useEffect(()=>{
+    if(cards){
+      setFlashcards(()=>{
+        const shuffledCards = shuffle<IResponseFlashCard>(cards);
+        const randCards = getRandomCards(shuffledCards);
+        return getAllCards(randCards);
+      })
+    }
+  },[cards]);
+
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
-          {cards.map((card,idx) => (
+          {flashcards.map((card,idx) => (
             <Grid item key={idx}>
               <FlashCard
                 card={card}

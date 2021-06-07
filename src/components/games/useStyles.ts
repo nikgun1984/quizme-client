@@ -3,10 +3,11 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
+      marginBottom: 20
     },
     paper: {
-      height: 140,
+      height: 180,
       width: 140,
       cursor: "pointer"
     },
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       height: "140px",
       width: "100%"
+    },
+    bottom:{
+      valign:"bottom"
     }
   })
 );

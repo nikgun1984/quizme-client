@@ -47,7 +47,7 @@ const Card:React.FC<CardProps> = ({
           {flipped && (
             <img
               src="https://datecraft.com/assets/images/sMatchWithPeople/its_match.gif"
-              width={100}
+              width={50}
               alt=""
             />
           )}

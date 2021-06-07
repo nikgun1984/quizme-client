@@ -7,11 +7,11 @@ export function shuffle<T>(array:T[]):T[] {
   return copy;
 }
 
-export function getRandomCards(shuffledArr:IResponseFlashCard[]):void {
+export function getRandomCards(shuffledArr:IResponseFlashCard[]):IResponseFlashCard[] {
   if (shuffledArr.length > 6) {
-    shuffledArr.slice(0, 6);
+    return shuffledArr.slice(0, 6);
   } else {
-    shuffledArr.slice(0, shuffledArr.length);
+    return shuffledArr.slice(0, shuffledArr.length);
   }
 }
 

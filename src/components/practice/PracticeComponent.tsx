@@ -6,6 +6,8 @@ import {useStyles} from './useStyles';
 import {useState,useEffect} from 'react';
 import {useSelector} from "react-redux";
 import { RootStore } from '../../state/store';
+import { IResponseFlashCard } from "../../interfaces/apis";
+import {shuffle} from '../../utilities/shuffleCards';
 
 type IRarams = {
   id:string;
@@ -16,6 +18,8 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
   const studysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const cards = studysets?.filter(el=>+el.id === +id)[0].cards;
   
+  // States Necessary for shuffling
+  const [flashcards,setFlashcards] = useState<IResponseFlashCard[]>([]);
   const [progress, setProgress] = useState(0);
   const [total,setTotal] = useState<number>(0);
   const [count,setCount] = useState<number>(1);
@@ -56,12 +60,20 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
       return count-1;
     });
   }
+
+  const handleCardShuffle = () => {
+    setFlashcards(shuffle(flashcards));
+    setCount(1);
+    setProgress(Math.floor(100/flashcards.length));
+  }
+
   
   /* Make sure load our values for total and progress due to async behavior of useSelect */
   useEffect(()=>{
     if(cards){
       setTotal(cards.length);
-      setProgress(Math.floor(100/cards.length))
+      setProgress(Math.floor(100/cards.length));
+      setFlashcards(cards);
     }
   },[cards])
 
@@ -86,7 +98,7 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
                   next={ (next:number, active:number) => handleClickNext(next,active) }
                   prev={ (prev:number, active:number) => handleClickPrev(prev,active) }
                   >
-                  {cards?.map((card) => (
+                  {flashcards.map((card) => (
                     <FlashCard key={card.id} term={card.term} definition={card.definition}/>
                   ))}
                 </Carousel>
@@ -100,7 +112,7 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
                     <em>Good luck!!!</em> {"   "}
                   </Typography>
                   <LinearWithValueLabel progress={progress} count={count} total={total}/>
-                  <Button variant="outlined" color="primary">
+                  <Button variant="outlined" color="primary" onClick={handleCardShuffle}>
                     Shuffle Cards
                   </Button>
                 </Paper>
