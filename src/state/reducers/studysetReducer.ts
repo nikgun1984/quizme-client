@@ -3,6 +3,7 @@ import {IDefaultState} from '../../interfaces/reducers';
 
 const defaultState:IDefaultState = {
 	loading: false,
+	// studysets: []
 };
 
 const studysetReducer = (state:IDefaultState = defaultState, action:UserStudysetDispatchTypes):IDefaultState => {

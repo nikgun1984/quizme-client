@@ -20,7 +20,7 @@ const GamePage: React.FC = () => {
 	return (
 		<>
 			<h5>Memory  Game</h5>
-			<MemoryGame cards={cards}/>
+			{/* <MemoryGame cards={cards}/> */}
 		</>
 	)
 }

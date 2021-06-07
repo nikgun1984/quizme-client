@@ -1,7 +1,4 @@
-// import {useState,useEffect} from 'react';
 import { useParams } from "react-router-dom";
-// import { QuizmeApi } from '../api';
-// import {IStudySetResponse} from '../interfaces/apis';
 import PracticeComponent from '../components/practice/PracticeComponent';
 import {useSelector} from "react-redux";
 import { RootStore } from '../state/store';
@@ -12,29 +9,14 @@ type ParamTypes = {
 
 const PracticeSet = () => {
     const studysets = useSelector((state: RootStore) => state.studysets.studysets);
-    console.log(studysets)
-	// const [studyset, setStudyset] = useState<IStudySetResponse>(Object);
 	const { id } = useParams<ParamTypes>();
 	const studyset = studysets?.filter(el=>+el.id === +id)[0];
 
-    // console.log(studyset)
-	// useEffect(()=>{
-	// 	const fetchData = async () => {
-	// 		const response = await QuizmeApi.getStudySet(id);
-	// 		try{
-	// 			setStudyset(response)
-	// 		}catch(err){
-	// 			console.log(err)
-	// 		}
-	// 	}
-	// 	fetchData();
-	// },[id])
 	return (
 		<>
-			<h5 style={{textAlign:"left"}}><em>Studyset:</em> {studyset?.title} </h5>
-			<h5 style={{textAlign:"left"}}><em>About:</em> {studyset?.description} </h5>
+			<h5 style={{textAlign:"left"}}><b>Studyset:</b> {studyset?.title} </h5>
 			<p style={{textAlign:"left"}}><em>Created By:</em> {studyset?.username} </p>
-			<PracticeComponent cards={studyset?.cards}/>
+			<PracticeComponent id={id}/>
 		</>
 	)
 }
