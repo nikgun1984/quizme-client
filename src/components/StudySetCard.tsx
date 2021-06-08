@@ -106,6 +106,8 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
                   variant="outlined"
                   size="small"
                   className={classes.margin}
+                  component={Link} 
+                  to={`/studysets/${id}/quiz`}
                 >
                   QuizMe{" "}
                 </Button>

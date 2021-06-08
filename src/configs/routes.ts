@@ -6,6 +6,7 @@ import StudySetPage from '../pages/studySet';
 import MyStudySetsPage from '../pages/myStudySets';
 import PracticeSet from '../pages/practicePage';
 import GamePage from '../pages/game';
+import QuizPage from '../pages/quiz';
 
 const routes: IRoute[] = [
 	{
@@ -40,6 +41,13 @@ const routes: IRoute[] = [
 		path: '/studysets/:id/memorygame',
 		name: 'Memory Game',
 		component: GamePage,
+		exact: true,
+		protected: true
+	},
+	{
+		path: '/studysets/:id/quiz',
+		name: 'Own Sets Page',
+		component: QuizPage,
 		exact: true,
 		protected: true
 	},
