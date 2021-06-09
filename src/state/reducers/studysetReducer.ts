@@ -3,10 +3,10 @@ import {IDefaultState} from '../../interfaces/reducers';
 
 const defaultState:IDefaultState = {
 	loading: false,
-	// studysets: []
 };
 
 const studysetReducer = (state:IDefaultState = defaultState, action:UserStudysetDispatchTypes):IDefaultState => {
+	console.log('FROM USER REDECER')
 	switch(action.type){
 		case USER_STUDYSETS_FAIL:
 			return {

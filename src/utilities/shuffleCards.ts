@@ -1,6 +1,7 @@
-import {ICard,IMemoryCard} from '../interfaces/cardGames';
+import {IMemoryCard} from '../interfaces/cardGames';
 import {IResponseFlashCard} from '../interfaces/apis';
 
+/* Simple shuffle your array */
 export function shuffle<T>(array:T[]):T[] {
   const copy = array.slice(0);
   copy.sort(() => Math.random() - 0.5);
@@ -33,39 +34,43 @@ export function getAllCards(randomArray:IResponseFlashCard[]):IMemoryCard[] {
       color: colors[idx]
     });
   });
-  console.log(cards)
   return shuffle(cards);
 }
 
-export const getRandomNumber = (min:number,max:number,idx:number)=>{
-  const step1 = max-min+1;
-  let step2;
-  while(true){
-    step2 = Math.random()*step1;
-    if(idx!==step2) break;
-  }
-  const step3 = Math.floor(step2)+min;
-  return step3;
-}
+/* Get a random index from array.length except for idx */
+const getRandomNumber = (maxIdx:number, idx:number) => {
+	let res;
+	while (true) {
+		res = Math.floor(Math.random() * maxIdx);
+		if (res !== idx) break;
+	}
+	return res;
+};
 
-export const createArray = (from:number,to:number)=>{
-  let arr = [];
-  for(let i=from;i<=to;i++){
-    arr.push(i);
-  }
-  return arr;
-}
+/* Create Array of Indeces except our index which  we add later */
+const createArray = (arrLen:number, idx:number) => {
+	let arr = [];
+	for (let i = 0; i < arrLen; i++) {
+		if (i !== idx) {
+			arr.push(i);
+		}
+	}
+	return arr;
+};
 
-export const createOptionArray = (min:number,max:number, idx:number) => {
-  const arr = createArray(min,max);
-  const optionArr = [];
-  for(let i=0;i<3;i++){
-    if(!arr.length) return;
-    let randVal = getRandomNumber(0,arr.length-1,idx);
-    optionArr.push(arr[randVal]);
-    arr.splice(randVal,1);
-  }
-  let randVal = getRandomNumber(0,optionArr.length-1,idx);
-  optionArr.splice(randVal,0,idx)
-  return optionArr;
-}
+/* Create an array for Quiz */
+export const createOptionArray = (arrLen:number, idx:number) => {
+	const arr = createArray(arrLen, idx);
+	let optionArr = [];
+	if (arr.length <= 3) {
+		optionArr = [...arr];
+	} else {
+		for (let i = 0; i < 3; i++) {
+			let randVal = getRandomNumber(arr.length, idx);
+			optionArr.push(arr[randVal]);
+			arr.splice(randVal, 1);
+		}
+	}
+	optionArr.push(idx);
+	return shuffle(optionArr);
+};

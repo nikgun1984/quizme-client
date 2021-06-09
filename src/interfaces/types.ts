@@ -7,6 +7,12 @@ export type ParamsType = {
 
 export type QuestionType = {
 	setCorrect: Dispatch<SetStateAction<number>>;
+	correct: number;
 	index:number;
 	flashcards: IResponseFlashCard[];
+}
+
+export type QuizResType = {
+	correct: number;
+	total: number;
 }

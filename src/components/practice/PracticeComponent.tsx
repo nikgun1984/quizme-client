@@ -108,11 +108,8 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
               <Paper className={classes.paper4} variant="outlined">
                 <Paper className={classes.paper1} variant="outlined">
                   <Typography component="p">PROGRESS: {"   "}</Typography>
-				          <Typography>
-                    <em>Good luck!!!</em> {"   "}
-                  </Typography>
                   <LinearWithValueLabel progress={progress} count={count} total={total}/>
-                  <Button variant="outlined" color="primary" onClick={handleCardShuffle}>
+                  <Button variant="outlined" className={classes.buttonStyle} onClick={handleCardShuffle}>
                     Shuffle Cards
                   </Button>
                 </Paper>
