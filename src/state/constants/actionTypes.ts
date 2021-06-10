@@ -1,5 +1,6 @@
+/* Action Types and Interfaces for out reducers */
+
 import {IStudySetResponse} from '../../interfaces/apis';
-import {IWinnerState} from '../../interfaces/reducers';
 
 export const USER_STUDYSETS_LOADING = "USER_STUDYSETS_LOADING";
 export const USER_STUDYSETS_FAIL = "USER_STUDYSETS_FAIL";
@@ -25,3 +26,4 @@ export interface UserWinner {
 }
 
 export type UserStudysetDispatchTypes = UserStudysetLoading | UserStudysetFail | UserStudysetSuccess;
+

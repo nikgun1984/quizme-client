@@ -1,3 +1,5 @@
+/* reducer for handling user's studysets */
+
 import {USER_STUDYSETS_FAIL, USER_STUDYSETS_LOADING, USER_STUDYSETS_SUCCESS, UserStudysetDispatchTypes} from '../constants/actionTypes';
 import {IDefaultState} from '../../interfaces/reducers';
 

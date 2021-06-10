@@ -1,21 +1,18 @@
 import {QuestionType} from '../../interfaces/types';
 import {Grid, FormControlLabel,FormControl,RadioGroup,Radio} from '@material-ui/core/';
-import {useState,useEffect} from 'react';
+import {useState} from 'react';
 import {createOptionArray} from '../../utilities/shuffleCards';
 
-const Question:React.FC<QuestionType> = ({setCorrect,correct,index,flashcards}) => {
+const Question:React.FC<QuestionType> = ({setCorrect,index,flashcards}) => {
 	const [randIdx,setRandIdx] = useState(()=>{
 		return createOptionArray(flashcards.length,index);
 	})
 	const [value, setValue] = useState({});
 	const [flag,setFlag] = useState(false);
-    console.log(randIdx)
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target as HTMLInputElement;
     	setValue({[name]: value});
-		console.log(flashcards[index].term)
-		console.log(value)
-		console.log(value === flashcards[index].term);
 		if(flag){
 			setCorrect(points=>points-1);
 			setFlag(false);

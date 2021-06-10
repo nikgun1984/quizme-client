@@ -1,3 +1,5 @@
+/* Interfaces for Reducers */
+
 import {IStudySetResponse} from './apis';
 
 export interface IDefaultState{

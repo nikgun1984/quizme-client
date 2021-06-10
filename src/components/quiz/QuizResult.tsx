@@ -10,7 +10,9 @@ const QuizResult:React.FC<QuizResType> = ({correct,total}) => {
 	const history = useHistory();
 	const dispatch:Dispatch<any> = useDispatch();
 	const handleClick = () =>{
-		dispatch(setWinner());
+		if(correct===total){
+			dispatch(setWinner());
+		}
 		history.push('/studysets');
 	}
 	return (

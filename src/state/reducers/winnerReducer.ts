@@ -1,3 +1,4 @@
+/* reducer for saving state for boolean value setWinner */
 import {SET_WINNER,UserWinner} from '../constants/actionTypes';
 import {IWinnerState} from '../../interfaces/reducers';
 

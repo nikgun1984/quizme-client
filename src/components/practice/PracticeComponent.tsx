@@ -4,16 +4,15 @@ import LinearWithValueLabel from "../linearprogressbar/LinearWithValueLabel";
 import FlashCard from "./FlashCard";
 import {useStyles} from './useStyles';
 import {useState,useEffect} from 'react';
+import { useHistory } from "react-router";
 import {useSelector} from "react-redux";
 import { RootStore } from '../../state/store';
 import { IResponseFlashCard } from "../../interfaces/apis";
 import {shuffle} from '../../utilities/shuffleCards';
+import {ParamsType} from '../../interfaces/types';
 
-type IRarams = {
-  id:string;
-}
-
-const PracticeComponent:React.FC<IRarams> = ({id}) => {
+const PracticeComponent:React.FC<ParamsType> = ({id}) => {
+  const history = useHistory();
   const classes = useStyles();
   const studysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const cards = studysets?.filter(el=>+el.id === +id)[0].cards;
@@ -67,6 +66,10 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
     setProgress(Math.floor(100/flashcards.length));
   }
 
+  const handleClick = () => {
+    history.push('/studysets');
+  }
+
   
   /* Make sure load our values for total and progress due to async behavior of useSelect */
   useEffect(()=>{
@@ -114,6 +117,9 @@ const PracticeComponent:React.FC<IRarams> = ({id}) => {
                   </Button>
                 </Paper>
               </Paper>
+              <div className="input-field">
+                <button className="btn waves-effect waves-light purple darken-1 mt4" onClick={handleClick}>Back to Your Studysets<i className="material-icons left">arrow_back</i></button>
+				      </div>
             </Grid>
           </Grid>
         </Grid>

@@ -39,18 +39,18 @@ const Card:React.FC<CardProps> = ({
 		</div>
       </Paper>
       <Paper
-        className={`${classes.paper}`}
+        className={`${flipped?classes.paper2:classes.paper}`}
 		style={{backgroundColor:card.color,color:'white'}}
       >
-        <div className={classes.center}>
+        <div className={`${classes.center}`}>
           <p>{card.expr}</p>
-          {flipped && (
+          {/* {flipped && (
             <img
               src="https://datecraft.com/assets/images/sMatchWithPeople/its_match.gif"
               width={50}
               alt=""
             />
-          )}
+          )} */}
         </div>
       </Paper>
     </ReactCardFlip>

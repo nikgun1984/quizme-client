@@ -1,25 +1,24 @@
 import Grid from "@material-ui/core/Grid";
 import {useState, useEffect,useRef} from 'react';
+import { useHistory } from "react-router";
+import {useSelector} from "react-redux";
 import FlashCard from "./FlashCard";
 import useStyles from "./useStyles";
-import {useSelector} from "react-redux";
 import { RootStore } from '../../state/store';
+import {shuffle,getRandomCards,getAllCards} from '../../utilities/shuffleCards';
+import {ParamsType} from '../../interfaces/types';
 import {IMemoryCard} from '../../interfaces/cardGames';
 import {IResponseFlashCard} from '../../interfaces/apis';
-import {shuffle,getRandomCards,getAllCards} from '../../utilities/shuffleCards';
 
-type IRarams = {
-  id:string;
-}
 
-const MemoryGame:React.FC<IRarams> = ({id}) => {
+const MemoryGame:React.FC<ParamsType> = ({id}) => {
+  const history = useHistory();
   const studysets = useSelector((state: RootStore) => state.studysets.studysets);
   const cards = studysets?.filter(el=>+el.id === +id)[0].cards;
   const classes = useStyles();
   const timeout = useRef<NodeJS.Timeout>();
 
   const [flashcards, setFlashcards] = useState<IMemoryCard[]>([]);
-  // console.log(flashcards[5].id);
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([]);
   const [flipped, setFlipped] = useState<boolean[]>(new Array(12).fill(false));
 
@@ -50,6 +49,19 @@ const MemoryGame:React.FC<IRarams> = ({id}) => {
     return flippedIndexes.includes(index);
   };
 
+  const handleCardsShuffle = () => {
+    setFlipped(new Array(flashcards.length).fill(false));
+    setFlashcards(()=>{
+      const shuffledCards = shuffle<IResponseFlashCard>(cards!);
+      const randCards = getRandomCards(shuffledCards);
+      return getAllCards(randCards);
+    })
+  }
+
+  const handleClick = () => {
+    history.push('/studysets');
+  }
+
   useEffect(() => {
     let timeout:any = null;
     if (flippedIndexes.length === 2) {
@@ -72,6 +84,12 @@ const MemoryGame:React.FC<IRarams> = ({id}) => {
 
   return (
     <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12}>
+        <div className="input-field">
+          <button className={`btn waves-effect waves-light purple darken-1 ${classes.mr1}`} onClick={handleClick}>Go Back<i className="material-icons left">arrow_back</i></button>
+					<button className={`btn waves-effect waves-light purple darken-1`} onClick={handleCardsShuffle}>Restart<i className="material-icons left">restart_alt</i></button>
+				</div>
+      </Grid>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
           {flashcards.map((card,idx) => (

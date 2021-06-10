@@ -1,20 +1,18 @@
-import { ParamsType } from "../../interfaces/types";
 import {Grid} from '@material-ui/core/';
-import {useStyles} from './useStyles';
-import {useState,useEffect, MouseEvent} from 'react';
-import LinearWithValueLabel from '../linearprogressbar/LinearWithValueLabel';
+import {useState,useEffect} from 'react';
+import {useSelector,useDispatch} from "react-redux";
+import {Dispatch} from 'redux';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import {renderTime} from '../../utilities/renderTime';
-import {useSelector} from "react-redux";
 import { RootStore } from '../../state/store';
 import { IResponseFlashCard } from "../../interfaces/apis";
+import { ParamsType } from "../../interfaces/types";
+import {useStyles} from './useStyles';
 import {shuffle} from '../../utilities/shuffleCards';
+import {renderTime} from '../../utilities/renderTime';
 import Question from './Question';
 import QuizResult from "./QuizResult";
-import {IWinnerState} from '../../interfaces/reducers';
+import LinearWithValueLabel from '../linearprogressbar/LinearWithValueLabel';
 import {setWinner} from '../../state/actions/winnerActions';
-import { useDispatch } from 'react-redux';
-import {Dispatch} from 'redux';
 
 const Quizme:React.FC<ParamsType> = ({id}) => {
 	const classes = useStyles();
@@ -27,20 +25,16 @@ const Quizme:React.FC<ParamsType> = ({id}) => {
 	const [total,setTotal] = useState<number>(0);
 	const [count,setCount] = useState<number>(0);
 	const [correct,setCorrect] = useState<number>(0);
-
-//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setValue((event.target as HTMLInputElement).value);
-//   };
+	const [time,setTime] = useState<number>(0);
 
   // Progress Bar handler for Next Button
-  const handleClickNext = (e:MouseEvent) => {
-	e.preventDefault();
+  const handleClickNext = () => {
 	setCount(count=>count+1);
+	setTime(time=>time+1);
 	if(count<flashcards.length-1){
 		let itemPercent = cards?Math.floor(100/cards.length):0;
         setProgress(progress=>progress+itemPercent);
 	} else if(count+1===flashcards.length) {
-		console.log('in here')
 		setProgress(100);
 		if(correct===total){
 			dispatch(setWinner())
@@ -54,8 +48,7 @@ const Quizme:React.FC<ParamsType> = ({id}) => {
       setFlashcards(shuffle<IResponseFlashCard>(cards));
 	  setTotal(cards.length);
     }
-	console.log(correct)
-  },[cards,count])
+  },[cards])
 	return (
 		<>
 		{count!==flashcards.length && 
@@ -65,14 +58,18 @@ const Quizme:React.FC<ParamsType> = ({id}) => {
 						<CountdownCircleTimer
 							isPlaying
 							size={80}
-							duration={30}
+							duration={10}
+							key={time}
 							colors={[
 								["#8e24aa", 0.25],
 								["#7b1fa2", 0.25],
 								["#6a1b9a", 0.25],
 								["#4a148c", 0.25]
 							]}
-							onComplete={() => [true, 1000]}
+							onComplete={() => {
+								handleClickNext();
+								return [true, 1000];
+							}}
 						>
 						{renderTime}
 						</CountdownCircleTimer>
@@ -89,15 +86,13 @@ const Quizme:React.FC<ParamsType> = ({id}) => {
 					</pre>
 				</Grid>
 			}
-			{/* <Grid item xs={12}>
-				<h6><b>Good luck!!!</b></h6>
-			</Grid> */}
+
 			<Grid item xs={12} className={classes.quizOptions}>
 				{
 					count!==flashcards.length && flashcards.map((card,idx)=>{
 						return (
 							<div key={idx} className={idx === count ? classes.optionsActive : classes.options}>
-								{idx===count && <Question setCorrect={setCorrect} correct={correct} index={idx} flashcards={flashcards}/>}
+								{idx===count && <Question setCorrect={setCorrect} index={idx} flashcards={flashcards}/>}
 							</div>
 						)
 					})

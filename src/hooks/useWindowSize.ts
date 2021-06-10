@@ -1,3 +1,5 @@
+/* This hook is for using some graphics for different size screens */
+
 import { useEffect, useState } from 'react'
 
 interface WindowSize {
