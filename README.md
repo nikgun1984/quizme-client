@@ -31,11 +31,11 @@ Technologies:
   - Pronounciation sound effects/Carousel for flashcards/Card Flip/Progress Bar/Shuffle Cards.  
 - Memory Game with Words.  
 - Created Redux Store for easier access of user's subsets. 
-- Implemented shuffle for cards and progress bar
+- Implemented shuffle for cards and progress bar. 
+- Quizes for studysets. 
 
 # NEXT TO-DO
 - Searching for other sets
-- Quizzes for sets
 - Maybe Testing if I got time. 
 
 Other Illustrations:  
