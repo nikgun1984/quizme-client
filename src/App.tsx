@@ -10,7 +10,8 @@ import Footer from './components/Footer';
 import AppContext from './appContext';
 import useLocalStorageState from './hooks/useLocalStorageState';
 import {theme} from './themes/theme';
-import {getUserStudySets} from "./state/actions/studysetActions"
+import {getUserStudySets} from "./state/actions/studysetActions";
+import {getWord} from "./state/actions/wordActions";
 import useWindowSize from './hooks/useWindowSize';
 import { RootStore } from './state/store';
 
@@ -26,6 +27,7 @@ const App: React.FC<{}> = (props) => {
   useEffect(()=> {
     logging.info('Loading application...');
     console.log(isWinner);
+    dispatch(getWord(new Date().toJSON().slice(0, 10).replace(/-/g, "-")))
     if(username){
       dispatch(getUserStudySets(username));
     }

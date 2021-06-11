@@ -21,3 +21,10 @@ export interface IResponseFlashCard {
 	definition: string,
 	studyset_id: string
 }
+
+export interface IResponseWord {
+	term: string,
+  	partOfSpeech: string,
+  	defs: string,
+  	syllable: string
+}

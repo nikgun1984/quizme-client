@@ -42,7 +42,7 @@ const NavBar: React.FC = () => {
           <Link to="/"><img src={logo} alt="" className="px1 align-center" width="150"/></Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {token && <li><NavLink to="/create-set">Create Study Set</NavLink></li>}
-            <li><Link to=""><i className="material-icons">search</i></Link></li>
+            {/* <li><Link to=""><i className="material-icons">search</i></Link></li> */}
             {!token && (
               <>
                 <li><NavLink to="/login">Sign In</NavLink></li>
@@ -67,7 +67,6 @@ const NavBar: React.FC = () => {
           onClose={handleMenuClose}
       >
           <MenuItem className={classes.fontColor} onClick={handleMenuClose} component={Link} to='/studysets'>My Studysets</MenuItem>
-          <MenuItem className={classes.fontColor} onClick={handleMenuClose}>My Favorite Studysets</MenuItem>
           <MenuItem className={classes.fontColor} onClick={handleLogout}>Log Out</MenuItem>
       </Menu>
     </>

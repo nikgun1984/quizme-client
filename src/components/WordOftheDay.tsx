@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {useSelector} from "react-redux";
+import { RootStore } from '../state/store';
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 export default function WordOftheDay() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+  const wordOfDay = useSelector((state: RootStore) => state.word.word);
+
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -33,16 +35,14 @@ export default function WordOftheDay() {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Word of the Day
         </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+        <Typography variant="h5" component="h5">
+          {wordOfDay.syllable}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          adjective
+          {wordOfDay.partOfSpeech}
         </Typography>
         <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {wordOfDay.defs}
         </Typography>
       </CardContent>
 

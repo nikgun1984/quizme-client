@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import {IToken} from './interfaces/apis';
-import {IStudySetResponse} from  './interfaces/apis';
+import {IStudySetResponse,IResponseWord} from  './interfaces/apis';
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -36,6 +36,7 @@ export const QuizmeApi = {
 	createStudyForm:  (formData:{}, url:string): Promise<IToken> => requests.post(`studysets`,formData),
 	getMyStudysets: (url:string): Promise<IStudySetResponse[]> => requests.get(`studysets/${url}/all`),
 	getStudySet: (id:string): Promise<IStudySetResponse> => requests.get(`studysets/${id}`),
+	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`)
 	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
 	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
 	// 	requests.post('posts', post),
