@@ -11,14 +11,14 @@ import {IStudySetResponse,IResponseWord} from  './interfaces/apis';
  * be any API-aware stuff elsewhere in the frontend.
  *
  */
-
+const token = localStorage.getItem('token') || "";
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
 	// timeout: 15000,
 	// withCredentials: true,
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: `Bearer ${localStorage.getItem('token')}`
+		Authorization: `Bearer ${token}`
 	}
 });
 

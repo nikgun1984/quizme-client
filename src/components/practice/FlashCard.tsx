@@ -27,7 +27,7 @@ const FlashCard:React.FC<IFlashCard> = (props) => {
       <Paper className={classes.paper2} elevation={3} variant="outlined">
         <div className={classes.center}>
           <h4>{props.term}</h4>
-		  <VolumeDownRoundedIcon onClick={handlePronounciation}/>
+		  <VolumeDownRoundedIcon onClick={handlePronounciation} className={classes.hover}/>
           <p>{"  "}</p>
           <Button
             className={classes.buttonStyle}

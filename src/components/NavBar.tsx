@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const NavBar: React.FC = () => {
-  const {token,setToken} = useContext(AppContext);
+  const {token,setToken,setUsername} = useContext(AppContext);
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -31,6 +31,7 @@ const NavBar: React.FC = () => {
   };
   const handleLogout = () => {
     handleMenuClose();
+    setUsername('');
     history.push("/login");
     setToken('');
   }
@@ -38,9 +39,13 @@ const NavBar: React.FC = () => {
 	return (
     <>
       <nav>
+        <div className="container"><Link to="#" data-target="nav-mobile" className="top-nav sidenav-trigger full hide-on-large-only right"><i className="material-icons">menu</i></Link></div>
+        {/* <ul id="nav-mobile"  className={`sidenav sidenav-fixed right ${classes.move}`}>
+
+        </ul> */}
         <div className="nav-wrapper purple accent-2 px1">
           <Link to="/"><img src={logo} alt="" className="px1 align-center" width="150"/></Link>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
+          <ul id="nav-mobile" className={"right hide-on-med-and-down"}>
             {token && <li><NavLink to="/create-set">Create Study Set</NavLink></li>}
             {/* <li><Link to=""><i className="material-icons">search</i></Link></li> */}
             {!token && (
@@ -57,7 +62,7 @@ const NavBar: React.FC = () => {
             }
           </ul>
         </div>
-      </nav>
+      </nav>      
       <Menu
           className={classes.menuPaper}
           id="menu"

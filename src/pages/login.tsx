@@ -1,7 +1,6 @@
-import React, {useEffect,useCallback,useContext} from 'react';
+import React, {useEffect,useCallback,useContext,useState} from 'react';
 import IPage from '../interfaces/page';
 import { useHistory } from 'react-router-dom';
-
 import logging from'../configs/logging';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,27 +14,37 @@ const LoginPage: React.FC<IPage> = (props) => {
     const history = useHistory();
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
     const {setToken,setUsername} = useContext(AppContext);
+	const [backendErrors,setBackendErrors] = useState('');
 	const onSubmit = useCallback((formValues: ILoginForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
+				setBackendErrors('');
 				setToken(data.token);
 				history.push("/");
-				window.responsiveVoice.speak(`Welcome back ${data.username}`,"US English Male");
+				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
 				setUsername(data.username!)
 			})
 			.catch((err) => {
-				console.log(err)
+				if(!err.response){
+					setBackendErrors('Network Error. Check your internet connection...');
+				} else {
+					if (err?.response?.status === 401) {
+   						setBackendErrors('Invalid username/password');
+  					}
+				}
 			});
   	}, [history, setToken, setUsername]);
 
 	useEffect(()=> {
+		console.log(backendErrors);
 		logging.info(`Loading ${props.name}`)
-	},[props.name])
+	},[props.name,backendErrors])
 
 	return (
 		<div className="row mt2">
 			<h3>L<img src={qlogo} alt="" width="30"/>gin</h3>
+			{backendErrors && <span className="helper-text red-text left-align">{backendErrors}</span>}
 			<form className="col s8" onSubmit={handleSubmit(onSubmit)}>
 				<div className="row">
 					<div className="input-field inline col s12">

@@ -27,6 +27,6 @@ export const theme = createMuiTheme({
           color: '#9811d6'
         }
       }
-    }
+    },
   }
 });

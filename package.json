@@ -65,6 +65,5 @@
 		"@types/uuid": "^8.3.0",
 		"awesome-typescript-loader": "^5.2.1",
 		"react-addons-test-utils": "^15.6.2"
-	},
-	"proxy": "http://localhost:3001/studysets/mark.curry123"
+	}
 }

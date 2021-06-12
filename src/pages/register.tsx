@@ -1,4 +1,4 @@
-import React, {useEffect,useCallback,useContext} from 'react';
+import React, {useEffect,useState,useCallback,useContext} from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
@@ -7,25 +7,30 @@ import {registerSchema} from '../validation/registerSchema';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { QuizmeApi } from '../api';
-import useLocalStorageState from '../hooks/useLocalStorageState';
 import AppContext from "../appContext";
-
 
 
 const RegisterPage: React.FC<IPage> = props => {
     const history = useHistory()
  	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
-	// const [token, setToken] = useLocalStorageState("token", "");
-    const { token, setToken } = useContext(AppContext);
+    const { setToken } = useContext(AppContext);
+	const [backendErrors,setBackendErrors] = useState('');
     const onSubmit = useCallback((formValues: IRegisterForm) => {
     	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
+				setBackendErrors('');
 				setToken(data.token);
 				history.push('/');
 			})
 			.catch((err) => {
-				console.log(err)
+				if(!err.response){
+					setBackendErrors('Network Error. Check your internet connection...');
+				} else {
+					if (err.response.status === 409) {
+   						setBackendErrors('Invalid username/password');
+  					}
+				}
 			});
   	}, [history, setToken]);
 
@@ -36,6 +41,7 @@ const RegisterPage: React.FC<IPage> = props => {
 	return (
 		<div className="row mt2">
 			<h3>Register</h3>
+			{backendErrors && <span className="helper-text red-text left-align">{backendErrors}</span>}
 			<form className="col s8" onSubmit={handleSubmit(onSubmit)}>
 				<div className="row">
 					<div className="input-field col s12">

@@ -38,6 +38,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: "#663399",
       borderColor: "#663399"
     },
-    
+    hover:{
+      cursor:"pointer"
+    }
   })
 );

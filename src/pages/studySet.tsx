@@ -75,7 +75,8 @@ const StudySetPage: React.FC<IPage> = props => {
 		QuizmeApi.createStudyForm(formValues,'')
 			.then((data) => {
 				console.log(data)
-				history.push('/studysets')
+				history.push('/studysets');
+				window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err)

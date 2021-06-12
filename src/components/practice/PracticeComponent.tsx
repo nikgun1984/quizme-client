@@ -70,7 +70,6 @@ const PracticeComponent:React.FC<ParamsType> = ({id}) => {
     history.push('/studysets');
   }
 
-  
   /* Make sure load our values for total and progress due to async behavior of useSelect */
   useEffect(()=>{
     if(cards){

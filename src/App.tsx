@@ -14,6 +14,7 @@ import {getUserStudySets} from "./state/actions/studysetActions";
 import {getWord} from "./state/actions/wordActions";
 import useWindowSize from './hooks/useWindowSize';
 import { RootStore } from './state/store';
+import { formatDate } from './utilities/getCorrectDate';
 
 const App: React.FC<{}> = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +28,8 @@ const App: React.FC<{}> = (props) => {
   useEffect(()=> {
     logging.info('Loading application...');
     console.log(isWinner);
-    dispatch(getWord(new Date().toJSON().slice(0, 10).replace(/-/g, "-")))
+    const date = formatDate(new Date().toString());
+    dispatch(getWord(date));
     if(username){
       dispatch(getUserStudySets(username));
     }
