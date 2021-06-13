@@ -1,8 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
 import Quizme from '../components/quiz/Quizme';
-import {Grid, Button} from '@material-ui/core/';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import {Grid} from '@material-ui/core/';
 import {useStyles} from '../components/quiz/useStyles';
 import {ParamsType} from '../interfaces/types';
 

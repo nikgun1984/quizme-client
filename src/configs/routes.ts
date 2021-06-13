@@ -7,6 +7,7 @@ import MyStudySetsPage from '../pages/myStudySets';
 import PracticeSet from '../pages/practicePage';
 import GamePage from '../pages/game';
 import QuizPage from '../pages/quiz';
+import  EditStudySet from '../pages/editsetPage';
 
 const routes: IRoute[] = [
 	{
@@ -48,6 +49,13 @@ const routes: IRoute[] = [
 		path: '/studysets/:id/quiz',
 		name: 'Own Sets Page',
 		component: QuizPage,
+		exact: true,
+		protected: true
+	},
+	{
+		path: '/studysets/:id/edit',
+		name: 'Edit Set Page',
+		component: EditStudySet,
 		exact: true,
 		protected: true
 	},

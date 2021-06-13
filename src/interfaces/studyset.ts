@@ -10,3 +10,9 @@ export interface IStudySet {
 	description:string;
 	cards: IFlashCard[];
 }
+
+export interface IEditSet {
+	id: string;
+	action: string;
+	onSubmit: (formValues: IStudySet) => void;
+}

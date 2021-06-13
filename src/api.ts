@@ -34,6 +34,7 @@ const requests = {
 export const QuizmeApi = {
 	getAuthorization: (formData:{}, url:string): Promise<IToken> => requests.post(`auth/${url}`,formData),
 	createStudyForm:  (formData:{}, url:string): Promise<IToken> => requests.post(`studysets`,formData),
+	editStudyForm:  (formData:{}, id:string): Promise<IStudySetResponse> => requests.put(`studysets/${id}`,formData),
 	getMyStudysets: (url:string): Promise<IStudySetResponse[]> => requests.get(`studysets/${url}/all`),
 	getStudySet: (id:string): Promise<IStudySetResponse> => requests.get(`studysets/${id}`),
 	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`)

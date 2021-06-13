@@ -5,53 +5,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../validation/studySetSchema';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { useStyles } from '../components/createset/styles';
 import {Grid,Box} from '@material-ui/core';
 import {IStudySet} from '../interfaces/studyset';
 import WordAutocomplete from '../components/WordAutocomplete';
 import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
 import { QuizmeApi } from '../api';
 import {getLinks} from '../utilities/uploadImages';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-	  marginTop: '2rem'
-    },
-    headerCreate: {
-      textAlign: 'left',
-    },
-	headerButton: {
-      textAlign: 'right',
-    },
-	textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: '25ch',
-    },
-	inputField:{
-		margin: 8,
-	},
-	paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-	boxBorder: {
-		borderWidth: '1px',
-		borderStyle: 'dashed',
-		borderRadius: '20px',
-		marginTop:'1rem',
-		marginBottom:'1rem'
-	},
-	space: {
-		padding:'1rem'
-	},
-	display: {
-		display: 'none'
-	}
-  }),
-);
 
 const StudySetPage: React.FC<IPage> = props => {
     const history = useHistory();
@@ -112,17 +72,15 @@ const StudySetPage: React.FC<IPage> = props => {
     }
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
-		console.log(watch);
-		console.log(fields);
 	},[fields, props.name, watch]);
 	return (
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
 					<Box m={5}>
 					<Grid item direction="column">
-							<Grid item xs={12} container>
+						<Grid item xs={12} container alignItems="center">
 							<Grid item xs={6} lg={3}>
-								<h6>Create a new study set</h6> 
+								<h6><b>Create a new study set</b></h6>
 							</Grid>
 							<Grid item lg={6}/>
 							<Grid item xs={6} lg={3}>
@@ -150,19 +108,18 @@ const StudySetPage: React.FC<IPage> = props => {
 
 						{fields.map((field,idx)=>{
 							const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
-							console.log(watchFields);
 							return (
 								<div key={field.id} className={classes.boxBorder}>
 									<div className={classes.space}>
 										<p>{`FLASHCARD#${idx+1}`}</p>
 										<Grid item container spacing={2} alignItems="center" justify="center">
 											<Grid item xs={12} lg={3}>
-												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx}/>
+												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value=""/>
 												 {/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 											</Grid>
 											<Grid item xs={12} lg={4}>
 												<div className="input-field">
-													<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx}/>
+													<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx} value=""/>
 													{/* {watchFields[1] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
             									</div>
 											</Grid>

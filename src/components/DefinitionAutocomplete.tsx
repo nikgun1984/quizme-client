@@ -3,7 +3,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Control, Controller, DeepMap, FieldError, FieldValues } from "react-hook-form";
 import { useState } from "react";
 
-export default function WordAutocomplete({ word,control,name,errors,idx }:{word:string,name:string,control:Control,errors:DeepMap<FieldValues, FieldError>,idx:number}) {
+export default function WordAutocomplete({ word,control,name,errors,idx,value }:{word:string,name:string,control:Control,errors:DeepMap<FieldValues, FieldError>,idx:number, value:string}) {
   const [definitions, setDefinitions] = useState<string[]>([]);
     console.log(definitions)
   	const onFocusHandle = async (word:string) => {
@@ -28,6 +28,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx }:{word:
     <Controller
       render={({ field }) => (
         <Autocomplete
+          value={value}
           freeSolo
           options={definitions}
           getOptionSelected={(option, value) => option === value}

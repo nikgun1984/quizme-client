@@ -1,58 +1,10 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link } from 'react-router-dom';
-
-
-type StudySetType = {
-  id: string,
-	count:number;
-	title:string;
-	description:string;
-	username: string;
-}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1
-    },
-    paper: {
-      padding: theme.spacing(3),
-      margin: "auto",
-      maxWidth: 1000
-    },
-    img: {
-      margin: "auto",
-      display: "block",
-	  width: 120,
-    },
-    margin: {
-      margin: theme.spacing(1),
-      color: "#663399",
-      borderColor: "#663399"
-    },
-    delete: {
-      margin: theme.spacing(1),
-      borderColor: "red"
-    },
-    edit: {
-      margin: theme.spacing(1),
-      borderColor: "#cd3fcd",
-      color: "#cd3fcd"
-    },
-    logo: {
-      width: 20,
-      height: 20
-    },
-	typography: {
-    	flexGrow: 1,
-    	textAlign: "left"
-  	}
-  })
-);
+import {useStyles} from './styles';
+import {StudySetType} from '../../interfaces/types';
 
 const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,username}) => {
   const classes = useStyles();
@@ -130,6 +82,8 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
                   variant="outlined"
                   size="small"
                   className={classes.edit}
+                  component={Link} 
+                  to={`/studysets/${id}/edit`}
                 >
                   Edit{" "}
                 </Button>

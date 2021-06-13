@@ -3,7 +3,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Control, Controller, DeepMap, FieldError, FieldValues } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-export default function WordAutocomplete({ control,name,errors,idx }:{name:string,control:Control,errors:DeepMap<FieldValues, FieldError>,idx:number}) {
+export default function WordAutocomplete({ control,name,errors,idx,value}:{name:string;control:Control;errors:DeepMap<FieldValues, FieldError>;idx:number;value:string}) {
   const [open, setOpen] = useState<boolean>(false);
   const [words, setWords] = useState<string[]>([]);
   	const onChangeHandle = async (value:string) => {
@@ -31,6 +31,7 @@ export default function WordAutocomplete({ control,name,errors,idx }:{name:strin
     <Controller
       render={({ field }) => (
         <Autocomplete
+          value={value}
           freeSolo
           onOpen={() => {
             setOpen(true);
@@ -44,7 +45,7 @@ export default function WordAutocomplete({ control,name,errors,idx }:{name:strin
           renderInput={params => (
             <div className="input-field">
               <TextField {...params} label="TERM" placeholder="Enter term" InputProps={{...params.InputProps, disableUnderline: true}}
-                onChange={(e) =>{field.onChange(e.target.value);onChangeHandle(e.target.value);}} defaultValue={field.value} />
+                onChange={(e) =>{field.onChange(e.target.value);onChangeHandle(e.target.value);}} defaultValue={field.value}/>
               {errors?.cards && errors?.cards[idx]?.term?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.term?.message}</span>}
             </div>
           )}

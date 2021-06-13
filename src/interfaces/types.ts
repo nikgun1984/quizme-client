@@ -19,3 +19,11 @@ export type QuizResType = {
 export type INUM = {
 	remainingTime: number;
 }
+
+export type StudySetType = {
+    id: string,
+	count:number;
+	title:string;
+	description:string;
+	username: string;
+}

@@ -1,4 +1,4 @@
-import StudySetCard from '../components/StudySetCard';
+import StudySetCard from '../components/studysetcard/StudySetCard';
 import {useSelector} from "react-redux";
 import { RootStore } from '../state/store';
 import { useHistory } from "react-router";
