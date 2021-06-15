@@ -39,11 +39,5 @@ export const QuizmeApi = {
 	getStudySet: (id:string): Promise<IStudySetResponse> => requests.get(`studysets/${id}`),
 	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`),
 	removeFlashcard: (id:string): Promise<IDeletedFlashcard> => requests.delete(`studysets/flashcard/${id}`),
-
-	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
-	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
-	// 	requests.post('posts', post),
-	// updatePost: (post: IRegisterForm, id: number): Promise<IRegisterForm> =>
-	// 	requests.put(`posts/${id}`, post),
-	// deletePost: (id: number): Promise<void> => requests.delete(`posts/${id}`),
+    removeStudyset: (id:string): Promise<IDeletedFlashcard> => requests.delete(`studysets/${id}`)
 };

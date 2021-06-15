@@ -26,4 +26,5 @@ export type StudySetType = {
 	title:string;
 	description:string;
 	username: string;
+	setDeleted: Dispatch<SetStateAction<string>>;
 }

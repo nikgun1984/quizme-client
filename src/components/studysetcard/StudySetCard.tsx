@@ -5,10 +5,38 @@ import Button from "@material-ui/core/Button";
 import { Link } from 'react-router-dom';
 import {useStyles} from './styles';
 import {StudySetType} from '../../interfaces/types';
+import { useDispatch } from "react-redux";
+import { useState,useEffect } from 'react';
+import { QuizmeApi } from '../../api';
+import {deleteStudyset} from '../../state/actions/studysetActions';
 
-const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,username}) => {
+const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,username,setDeleted}) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const [submitting, setSubmitting] = useState(false);
 
+	useEffect(()=>{
+		let timer: NodeJS.Timeout;
+		const removeStudyset = async (idx:string) => {
+			await QuizmeApi.removeStudyset(idx)
+				.then((data) => {
+					setSubmitting(false)
+					console.log(data)
+					if(data) setDeleted('Studyset has been deleted sucessfully...');
+					timer = setTimeout(() => {
+						setDeleted('')
+					}, 5000);
+				})
+				.catch((err) => {
+					console.log(err)
+				});
+			dispatch(deleteStudyset(+idx));
+		}
+		if(submitting){
+			removeStudyset(id);
+		}
+		return () => clearTimeout(timer);
+	},[submitting])
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={3}>
@@ -94,6 +122,7 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
                   variant="outlined"
                   size="small"
                   className={classes.delete}
+                  onClick={()=>setSubmitting(true)}
                 >
                   Delete
                 </Button>

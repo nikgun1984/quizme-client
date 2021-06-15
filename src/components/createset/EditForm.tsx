@@ -3,7 +3,7 @@ import { RootStore } from '../../state/store';
 import {IEditSet} from '../../interfaces/studyset';
 import {Grid,Box} from '@material-ui/core';
 import {useStyles} from './styles';
-import {useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import { useForm, useFieldArray} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {studySetSchema} from '../../validation/studySetSchema';
@@ -14,13 +14,13 @@ import { IStudySetResponse } from "../../interfaces/apis";
 const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	const classes = useStyles();
 	const studysets = useSelector((state: RootStore) => state.studysets.studysets);
-	const set = studysets?.filter(el=>+el.id === +id)[0];
+	const [isDeleted,setIsDeleted] = useState<string>('');
 	const { register, watch,control,handleSubmit, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
 		id: id,
 		title: '',
 		description:'',
 		username: '',
-		cards: [...set?set.cards:[]]
+		cards: []
 	}});
     const {fields,append,remove} = useFieldArray({
 		control,
@@ -31,23 +31,12 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 		append({})
 	};
 
-	const removeCard = (idx:number) => {
-		// await QuizmeApi.removeFlashcard(fieldID)
-		// 	.then((data) => {
-		// 		console.log(data)
-		// 		if(data) setIsDeleted(`Flashcard has been deleted...`);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err)
-		// 	});
-		remove(idx);
-	}
-
 	useEffect(()=>{
+		const set = studysets?.find(el=>+el.id === +id);
 		if(set){
 			reset(set)
 		}
-  	},[set]);
+  	},[studysets, reset, id]);
 
 	return (
 			<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
@@ -59,7 +48,7 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 						</Grid>
 						<Grid item lg={6}/>
 						<Grid item xs={6} lg={3}>
-							<button className="waves-effect waves-light btn purple darken-1" type="submit"><i className="material-icons left">app_registration</i>Create</button>
+							<button className="waves-effect waves-light btn purple darken-1" type="submit"><i className="material-icons left">app_registration</i>Edit</button>
 						</Grid>
 					</Grid>
 				</Grid>
@@ -80,12 +69,14 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 						</div>
 					</Grid>
 					{errors.cards && <span className="helper-text red-text">{(errors.cards as any).message}</span>}
+				    {isDeleted && <span className="helper-text red-text">{isDeleted}</span>}
 					{   
 						fields.map((field,idx)=>{
 						const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
+						console.log(field);
 						return (
 							<div key={field.id} className={classes.boxBorder}>
-								<FlashCardForm control={control} idx={idx} errors={errors} watchFields={watchFields} remove={removeCard} card={set?.cards[idx]} fieldID={field.id}/>
+								<FlashCardForm control={control} idx={idx} errors={errors} watchFields={watchFields} remove={remove} card={field} fieldID={field.id} setIsDeleted={setIsDeleted}/>
 							</div>
 						)
 					})

@@ -3,15 +3,41 @@ import DefinitionAutocomplete from '../DefinitionAutocomplete';
 import {Grid} from '@material-ui/core';
 import {useStyles} from './styles';
 import {IFlashCardForm} from '../../interfaces/forms';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { QuizmeApi } from '../../api';
-import { IDeletedFlashcard } from '../../interfaces/apis';
+import { useDispatch } from "react-redux";
+import {deleteFlashCard} from '../../state/actions/studysetActions';
 
 
-const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,remove,card,fieldID}) => {
+const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,remove,card,fieldID,setIsDeleted}) => {
+	const dispatch = useDispatch();
 	const classes = useStyles();
-    const [isDeleted,setIsDeleted] = useState('');
-	console.log(typeof idx);
+	const [submitting, setSubmitting] = useState(false)
+	console.log(idx);
+	useEffect(()=>{
+		let timer: NodeJS.Timeout;
+		const removeCard = async (idx:number,idSet:number) => {
+			await QuizmeApi.removeFlashcard(fieldID)
+				.then((data) => {
+					setSubmitting(false)
+					console.log(data)
+					if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
+					timer = setTimeout(() => {
+						setIsDeleted && setIsDeleted('')
+					}, 5000);
+				})
+				.catch((err) => {
+					console.log(err)
+				});
+			dispatch(deleteFlashCard(idx,idSet));
+		}
+		if(submitting && card){
+			console.log('Line 37: '+idx)
+			remove(idx);
+			removeCard(+card.id,+card.studyset_id);
+		}
+		return () => clearTimeout(timer);
+	},[submitting])
 	return (
 		<div className={classes.space}>
 			<p>{`FLASHCARD#${idx+1}`}</p>
@@ -37,13 +63,13 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 							{/* <input type="file" id="file" {...register(`cards.${idx}.img` as const)}/> */}
 						</div>
 						<div className="file-path-wrapper">
-							<input className="file-path validate" type="text" value="uploaded"/>
+							<input className="file-path validate" type="text" value="uploaded" disabled/>
 						</div>
 					</div>
 				</Grid>
 				<Grid item xs={12} lg={1}>
 					<div className={`${classes.paper} input-field`}>
-						<button type="button" onClick={()=>remove(idx)}><span className="material-icons align-center">delete</span></button>
+						<button type="button" onClick={() => setSubmitting(true)}><span className="material-icons align-center">delete</span></button>
 					</div>
 				</Grid>
 			</Grid>
@@ -52,3 +78,6 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 }
 
 export default FlashCardForm;
+
+
+

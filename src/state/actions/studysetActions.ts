@@ -1,4 +1,4 @@
-import {USER_STUDYSETS_LOADING,USER_STUDYSETS_SUCCESS,USER_STUDYSETS_FAIL,UserStudysetDispatchTypes} from '../constants/actionTypes';
+import {USER_STUDYSETS_LOADING,USER_STUDYSETS_SUCCESS,USER_STUDYSETS_FAIL,UserStudysetDispatchTypes,DELETE_FLASHCARD,DELETE_STUDYSET} from '../constants/actionTypes';
 import { Dispatch } from 'redux';
 import { QuizmeApi } from '../../api';
 
@@ -20,4 +20,12 @@ export const getUserStudySets = (username:string) => async(dispatch:Dispatch<Use
 			type: USER_STUDYSETS_FAIL
 		})
 	}
+}
+
+export const deleteFlashCard = (id:number,studySetID:number) =>  {
+	return {type: DELETE_FLASHCARD, id, studySetID}
+}
+
+export const deleteStudyset = (id:number) =>  {
+	return {type: DELETE_STUDYSET, id}
 }

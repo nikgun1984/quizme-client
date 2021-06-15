@@ -1,5 +1,6 @@
 import { Control, DeepMap, FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 import { IResponseFlashCard, IStudySetResponse } from "./apis";
+import {Dispatch,SetStateAction} from 'react';
 
 export interface ILoginForm {
     email: string;
@@ -20,5 +21,6 @@ export interface IFlashCardForm {
 	remove: (idx: number) => void;
     card?: IResponseFlashCard | undefined;
     fieldID: string;
+	setIsDeleted?: Dispatch<SetStateAction<string>>
 }
 

@@ -2,9 +2,11 @@ import StudySetCard from '../components/studysetcard/StudySetCard';
 import {useSelector} from "react-redux";
 import { RootStore } from '../state/store';
 import { useHistory } from "react-router";
+import { useState }  from "react";
 
 const MyStudySets = () => {
     const userStudysets = useSelector((state: RootStore) => state.studysets.studysets);
+	const [deleted,setDeleted] = useState('');
     const history = useHistory();
 	const handleClick = () => {
     	history.push('/create-set');
@@ -12,11 +14,12 @@ const MyStudySets = () => {
 	return (
 		<>
 			<h5 className="mt2"><b>My Studysets</b></h5>
+			{deleted && <span className="helper-text red-text">{deleted}</span>}
 			{
 				userStudysets?.length?userStudysets?.map(studyset=>{
 					return (
 						<div key={studyset.id} className="mt2 mb2">
-							<StudySetCard id={studyset.id} count={studyset.cards.length} title={studyset.title} description={studyset.description} username={studyset.username}/>
+							<StudySetCard id={studyset.id} count={studyset.cards.length} title={studyset.title} description={studyset.description} username={studyset.username} setDeleted={setDeleted}/>
 						</div>
 					)
 				}):
