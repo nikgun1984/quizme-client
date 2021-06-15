@@ -9,6 +9,7 @@ export const SET_WINNER = "SET_WINNER";
 export const SET_WORD = "SET_WORD";
 export const SET_WORD_FAIL = "SET_WORD_FAIL";
 
+
 export interface UserStudysetLoading {
 	type: typeof USER_STUDYSETS_LOADING
 }

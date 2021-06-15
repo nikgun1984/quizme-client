@@ -6,14 +6,10 @@ export const studySetSchema =
 			.required('Title is required'),
 		description: Yup.string()
 			.required('Add description of your study set'),
-		cards: Yup.array()
-    		.of(Yup.object().shape({
-        		term: Yup.string()
-          			.ensure()
-          			.required("Term is required"),
-        		definition: Yup.string()
-          			.required("Definition is required")
-      		})
-    		)
-    		.min(2, "You need at least two cards")
+		cards: Yup.array(
+			Yup.object({
+				term: Yup.string().required("Term is required"),
+				definition: Yup.string().required("Definition is required")
+			})
+		).min(2, "You need at least two cards")
 });

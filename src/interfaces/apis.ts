@@ -28,3 +28,7 @@ export interface IResponseWord {
   	defs: string,
   	syllable: string
 }
+
+export interface IDeletedFlashcard {
+	deleted: number
+}

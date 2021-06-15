@@ -7,8 +7,6 @@ const defaultState:IWinnerState = {
 };
 
 const winnerReducer = (state:IWinnerState = defaultState, action:UserWinner):IWinnerState => {
-	console.log(action)
-	console.log(state);
 	switch(action.type){
 		case SET_WINNER:
 			return {...state, setWinner: !state.setWinner,}

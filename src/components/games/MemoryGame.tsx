@@ -70,6 +70,7 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
     return () => {
       clearTimeout(timeout);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flippedIndexes]);
 
   useEffect(()=>{

@@ -4,10 +4,10 @@ import {useState} from 'react';
 import {createOptionArray} from '../../utilities/shuffleCards';
 
 const Question:React.FC<QuestionType> = ({setCorrect,index,flashcards}) => {
-	const [randIdx,setRandIdx] = useState(()=>{
+	const [randIdx] = useState(()=>{
 		return createOptionArray(flashcards.length,index);
 	})
-	const [value, setValue] = useState({});
+	const [, setValue] = useState({});
 	const [flag,setFlag] = useState(false);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,5 +1,5 @@
 import { Control, DeepMap, FieldError, FieldValues, UseFormRegister } from "react-hook-form";
-import { IResponseFlashCard } from "./apis";
+import { IResponseFlashCard, IStudySetResponse } from "./apis";
 
 export interface ILoginForm {
     email: string;
@@ -13,12 +13,12 @@ export interface IRegisterForm {
 }
 
 export interface IFlashCardForm {
-	control: Control<FieldValues>;
+	control: Control<IStudySetResponse>;
 	idx: number;
-	errors: DeepMap<FieldValues, FieldError>;
+	errors: DeepMap<IStudySetResponse, FieldError>;
 	watchFields: [any, any];
-	register: UseFormRegister<FieldValues>;
-	remove: (index?: number | number[] | undefined) => void;
-    card: IResponseFlashCard;
+	remove: (idx: number) => void;
+    card?: IResponseFlashCard | undefined;
+    fieldID: string;
 }
 

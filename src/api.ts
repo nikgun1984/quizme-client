@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import {IToken} from './interfaces/apis';
-import {IStudySetResponse,IResponseWord} from  './interfaces/apis';
+import {IStudySetResponse,IResponseWord,IDeletedFlashcard} from  './interfaces/apis';
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -37,7 +37,9 @@ export const QuizmeApi = {
 	editStudyForm:  (formData:{}, id:string): Promise<IStudySetResponse> => requests.put(`studysets/${id}`,formData),
 	getMyStudysets: (url:string): Promise<IStudySetResponse[]> => requests.get(`studysets/${url}/all`),
 	getStudySet: (id:string): Promise<IStudySetResponse> => requests.get(`studysets/${id}`),
-	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`)
+	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`),
+	removeFlashcard: (id:string): Promise<IDeletedFlashcard> => requests.delete(`studysets/flashcard/${id}`),
+
 	// getAPost: (id: number): Promise<IRegisterForm> => requests.get(`posts/${id}`),
 	// createPost: (post: IRegisterForm): Promise<IRegisterForm> =>
 	// 	requests.post('posts', post),

@@ -8,7 +8,6 @@ const defaultState:IDefaultState = {
 };
 
 const studysetReducer = (state:IDefaultState = defaultState, action:UserStudysetDispatchTypes):IDefaultState => {
-	console.log('FROM USER REDECER')
 	switch(action.type){
 		case USER_STUDYSETS_FAIL:
 			return {

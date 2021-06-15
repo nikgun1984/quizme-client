@@ -27,7 +27,6 @@ const App: React.FC<{}> = (props) => {
   // Lets load application
   useEffect(()=> {
     logging.info('Loading application...');
-    console.log(isWinner);
     const date = formatDate(new Date().toString());
     dispatch(getWord(date));
     if(username){

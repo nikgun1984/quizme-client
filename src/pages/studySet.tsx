@@ -8,22 +8,21 @@ import logging from'../configs/logging';
 import { useStyles } from '../components/createset/styles';
 import {Grid,Box} from '@material-ui/core';
 import {IStudySet} from '../interfaces/studyset';
-import WordAutocomplete from '../components/WordAutocomplete';
-import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
 import { QuizmeApi } from '../api';
-import {getLinks} from '../utilities/uploadImages';
+import FlashCardForm from '../components/createset/FlashCardForm';
+import { IStudySetResponse } from '../interfaces/apis';
+// import {getLinks} from '../utilities/uploadImages';
 
 const StudySetPage: React.FC<IPage> = props => {
     const history = useHistory();
     const classes = useStyles();
-	const { register, watch,control,handleSubmit, formState: { errors } } = useForm({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),});
+	const { register, watch,control,handleSubmit, formState: { errors } } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema)});
     const {fields,append,remove} = useFieldArray({
 		control,
 		name: 'cards',
 	})
 
 	const onSubmit = (formValues: IStudySet) => {
-		console.log('IM INSIDE HERE');
     	// console.log(formValues);
 		// getLinks(formValues.cards);
         // console.log(formValues);
@@ -34,7 +33,6 @@ const StudySetPage: React.FC<IPage> = props => {
 		console.log(formValues);
 		QuizmeApi.createStudyForm(formValues,'')
 			.then((data) => {
-				console.log(data)
 				history.push('/studysets');
 				window.location.reload();
 			})
@@ -57,11 +55,10 @@ const StudySetPage: React.FC<IPage> = props => {
 
 	const addCard = (e:React.SyntheticEvent): void => {
 		e.preventDefault();
-		console.log(fields);
 		append({})
 	};
 
-	const createCard  = (): void => {
+	//const createCard  = (): void => {
 		// e.preventDefault();
 		// console.log(fields)
 		// const target= event.target as HTMLInputElement;
@@ -69,7 +66,7 @@ const StudySetPage: React.FC<IPage> = props => {
 		// const fd = new FormData();
 		// fd.append('image',file,file.name);
         // send "values" to database
-    }
+    //}
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
 	},[fields, props.name, watch]);
@@ -77,7 +74,7 @@ const StudySetPage: React.FC<IPage> = props => {
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
 					<Box m={5}>
-					<Grid item direction="column">
+					<Grid item container direction="column">
 						<Grid item xs={12} container alignItems="center">
 							<Grid item xs={6} lg={3}>
 								<h6><b>Create a new study set</b></h6>
@@ -94,57 +91,23 @@ const StudySetPage: React.FC<IPage> = props => {
 							<div className="input-field">
 								<input id="title" {...register("title")} type="text" className="validate" placeholder="Enter your title in here..." defaultValue="" />
 								<label htmlFor="title" className="active">TITLE</label>
-								{errors.title?.message && <span className="helper-text red-text left-align">{errors.title?.message}</span>}
+								{errors.title && <span className="helper-text red-text left-align">{errors.title.message}</span>}
 							</div>
 						</Grid>
 						<Grid item xs={12} lg={12}>
 							<div className="input-field">
 								<input id="description" {...register("description")} type="text" className="validate" placeholder="Add a description" defaultValue=""/>
 								<label htmlFor="description" className="active">DESCRIPTION</label>
-								{errors.description?.message && <span className="helper-text red-text left-align">{errors.description?.message}</span>}
+								{errors.description && <span className="helper-text red-text left-align">{errors.description.message}</span>}
 							</div>
 						</Grid>
-						{errors.cards?.message && <span className="helper-text red-text">{errors.cards?.message}</span>}
+						{errors.cards && <span className="helper-text red-text">{(errors.cards as any).message}</span>}
 
 						{fields.map((field,idx)=>{
 							const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
 							return (
 								<div key={field.id} className={classes.boxBorder}>
-									<div className={classes.space}>
-										<p>{`FLASHCARD#${idx+1}`}</p>
-										<Grid item container spacing={2} alignItems="center" justify="center">
-											<Grid item xs={12} lg={3}>
-												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value=""/>
-												 {/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
-											</Grid>
-											<Grid item xs={12} lg={4}>
-												<div className="input-field">
-													<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx} value=""/>
-													{/* {watchFields[1] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
-            									</div>
-											</Grid>
-											<Grid item xs={12} lg={3}>
-												{/* <div className={`${classes.paper} input-field`}>
-													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} />
-													<label htmlFor="file" className="active">IMAGE</label>
-												</div> */}
-												<div className="file-field input-field">
-													<div className="btn purple darken-1">
-														<span>Image</span>
-														<input type="file" id="file" {...register(`cards.${idx}.img` as const)}/>
-													</div>
-													<div className="file-path-wrapper">
-														<input className="file-path validate" type="text" value="uploaded"/>
-													</div>
-												</div>
-											</Grid>
-											<Grid item xs={12} lg={1}>
-												<div className={`${classes.paper} input-field`}>
-													<button type="button" onClick={()=> remove(idx)}><span className="material-icons align-center">delete</span></button>
-												</div>
-											</Grid>
-										</Grid>
-									</div>
+									<FlashCardForm control={control} idx={idx} errors={errors} watchFields={watchFields} remove={remove} fieldID=""/>
 								</div>
 							)
 						})}

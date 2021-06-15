@@ -16,7 +16,6 @@ const LoginPage: React.FC<IPage> = (props) => {
     const {setToken,setUsername} = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
 	const onSubmit = useCallback((formValues: ILoginForm) => {
-    	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
 				setBackendErrors('');
@@ -37,7 +36,6 @@ const LoginPage: React.FC<IPage> = (props) => {
   	}, [history, setToken, setUsername]);
 
 	useEffect(()=> {
-		console.log(backendErrors);
 		logging.info(`Loading ${props.name}`)
 	},[props.name,backendErrors])
 

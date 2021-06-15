@@ -13,15 +13,16 @@ import AppContext from "../appContext";
 const RegisterPage: React.FC<IPage> = props => {
     const history = useHistory()
  	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
-    const { setToken } = useContext(AppContext);
+    const { setToken,setUsername } = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
     const onSubmit = useCallback((formValues: IRegisterForm) => {
-    	console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
 				setBackendErrors('');
 				setToken(data.token);
 				history.push('/');
+				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
+				setUsername(data.username!)
 			})
 			.catch((err) => {
 				if(!err.response){
@@ -32,7 +33,7 @@ const RegisterPage: React.FC<IPage> = props => {
   					}
 				}
 			});
-  	}, [history, setToken]);
+  	}, [history, setToken, setUsername]);
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
