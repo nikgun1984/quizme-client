@@ -21,7 +21,6 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
 			await QuizmeApi.removeStudyset(idx)
 				.then((data) => {
 					setSubmitting(false)
-					console.log(data)
 					if(data) setDeleted('Studyset has been deleted sucessfully...');
 					timer = setTimeout(() => {
 						setDeleted('')
@@ -36,6 +35,7 @@ const StudySetCard: React.FC<StudySetType> = ({id,count,title,description,userna
 			removeStudyset(id);
 		}
 		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[submitting])
   return (
     <div className={classes.root}>

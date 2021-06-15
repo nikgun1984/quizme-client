@@ -33,9 +33,9 @@ const Question:React.FC<QuestionType> = ({setCorrect,index,flashcards}) => {
 			<FormControl component="fieldset">
 				<RadioGroup aria-label="gender" name="gender1" onChange={handleChange}>
 					{
-						randIdx?.map((el)=>{
+						randIdx?.map((el,idx)=>{
 							return (
-								<FormControlLabel name={flashcards[el].term} value={flashcards[el].term}  control={<Radio color="primary"/>} label={flashcards[el].term} />
+								<FormControlLabel key={idx} name={flashcards[el].term} value={flashcards[el].term}  control={<Radio color="primary"/>} label={flashcards[el].term} />
 							)
 						})
 					}

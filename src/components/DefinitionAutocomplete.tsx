@@ -1,12 +1,11 @@
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { Control, Controller, DeepMap, FieldError, FieldValues } from "react-hook-form";
+import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
 import { useState } from "react";
 import { IStudySetResponse } from "../interfaces/apis";
 
 export default function WordAutocomplete({ word,control,name,errors,idx,value }:{word:string,name:any,control:Control<IStudySetResponse>,errors:DeepMap<IStudySetResponse, FieldError>,idx:number, value:string}) {
   const [definitions, setDefinitions] = useState<string[]>([]);
-  console.log(value)
   	const onFocusHandle = async (word:string) => {
       if(word){
 		    setDefinitions([]);

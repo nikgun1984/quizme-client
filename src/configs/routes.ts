@@ -73,12 +73,7 @@ const routes: IRoute[] = [
 		exact: true,
 		protected: true
 	},
-	// {
-	// 	path: '/:user',
-	// 	name: 'User Page',
-	// 	component: UserPage,
-	// 	exact: true,
-	// },
+
 ]
 
 export default routes;

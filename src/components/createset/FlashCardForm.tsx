@@ -13,14 +13,12 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const [submitting, setSubmitting] = useState(false)
-	console.log(idx);
 	useEffect(()=>{
 		let timer: NodeJS.Timeout;
 		const removeCard = async (idx:number,idSet:number) => {
 			await QuizmeApi.removeFlashcard(fieldID)
 				.then((data) => {
 					setSubmitting(false)
-					console.log(data)
 					if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
 					timer = setTimeout(() => {
 						setIsDeleted && setIsDeleted('')
@@ -32,11 +30,11 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 			dispatch(deleteFlashCard(idx,idSet));
 		}
 		if(submitting && card){
-			console.log('Line 37: '+idx)
 			remove(idx);
 			removeCard(+card.id,+card.studyset_id);
 		}
 		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[submitting])
 	return (
 		<div className={classes.space}>

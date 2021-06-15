@@ -2,7 +2,6 @@
 
 import {USER_STUDYSETS_FAIL, USER_STUDYSETS_LOADING, USER_STUDYSETS_SUCCESS, DELETE_FLASHCARD, DELETE_STUDYSET, UserStudysetDispatchTypes} from '../constants/actionTypes';
 import {IDefaultState} from '../../interfaces/reducers';
-import { IStudySetResponse } from '../../interfaces/apis';
 
 const defaultState:IDefaultState = {
 	loading: false,
@@ -29,10 +28,7 @@ const studysetReducer = (state:IDefaultState = defaultState, action:UserStudyset
 				return {
 					loading: false,
 					studysets: state.studysets.map(el=>{
-						console.log('ID: '+action.id);
-						console.log('Study ID: '+action.studySetID);
 						if(+el.id === action.studySetID){
-							console.log('I am in...')
 							return {...el,cards:el.cards.filter(card=>+card.id !== action.id)};
 						}
 						return el;
