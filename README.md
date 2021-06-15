@@ -34,9 +34,6 @@ Technologies:
 - Implemented shuffle for cards and progress bar. 
 - Quizes for studysets. 
 
-# NEXT TO-DO
-- Searching for other sets
-- Maybe Testing if I got time. 
 
 Other Illustrations:  
 Creation of Studyset that consists of flashcards:
