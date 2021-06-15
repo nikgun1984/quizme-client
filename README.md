@@ -33,10 +33,8 @@ Technologies:
 - Created Redux Store for easier access of user's subsets. 
 - Implemented shuffle for cards and progress bar. 
 - Quizes for studysets. 
+- Deletion of studysets/flashcards and ability to edit studysets
 
-# NEXT TO-DO
-- Searching for other sets
-- Maybe Testing if I got time. 
 
 Other Illustrations:  
 Creation of Studyset that consists of flashcards:
