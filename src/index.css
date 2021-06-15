@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    position: relative;
+    padding-bottom: 58px;
+    min-height: 100vh;
+    background-color: rgb(237, 223, 246);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.px1 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.px4 {
+    padding-left: 4rem;
+}
+
+.align-center {
+    vertical-align: middle;
+}
+
+.mt2 {
+    margin-top: 2rem;
+}
+
+.mb2 {
+    margin-bottom: 2rem;
+}
+
+.mb4 {
+    margin-bottom: 4rem;
+}
+
+
+.mt4 {
+    margin-top: 4rem;
+}
+
+
+.row .col {
+    float: none !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+    color: rgb(152, 17, 214) !important;
+}
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px solid rgb(152, 17, 214) !important;
+    box-shadow: 0 1px 0 0 rgb(152, 17, 214) !important
+}
+
+footer {
+    text-align: center;
+    background-color: #cd3fcd;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: #663399;
+}
+
+pre {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
