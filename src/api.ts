@@ -9,11 +9,12 @@ import {IStudySetResponse,IResponseWord,IDeletedFlashcard} from  './interfaces/a
  * Static class tying together methods used to get/send to to the API.
  * There shouldn't be any frontend-specific stuff here, and there shouldn't
  * be any API-aware stuff elsewhere in the frontend.
- *
+ *https://quizme-api.herokuapp.com/
  */
 const token = localStorage.getItem('token') || "";
 const instance = axios.create({
-	baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
+	// baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
+	baseURL: "https://quizme-api.herokuapp.com/",
 	// timeout: 15000,
 	// withCredentials: true,
 	headers: {
