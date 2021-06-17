@@ -1,8 +1,3 @@
-# QuizMe React
-
-
-
-
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -27,7 +22,7 @@
   <a href="https://ketolifeapp.herokuapp.com/">
     <img src="logo.png" alt="Logo" width="100">
   </a>
-  <h3 align="center">QuizMe API</h3>
+  <h3 align="center">QuizMe React Application</h3>
 </p>
 
 
@@ -118,8 +113,8 @@ yarn install
 
 <!-- USAGE EXAMPLES -->
 ## Usage. 
-
-![alt text](sample.png)
+Welcome Screen with Word of the day:
+![alt text](sample7.png)
 
 # WHAT IS DONE:  
 - Registration/Login
@@ -149,7 +144,10 @@ Studysets that the user has.
 ![alt text](sample3.png)
 Study and Practice your topics with cool graphical interface:  
 ![alt text](sample4.png)
-
+Memory Game to internalize the terminology of flashcards:  
+![alt text](sample5.png)
+At last you can practice and test yourself the learned material:  
+![alt text](sample6.png)
  
 <!-- ROADMAP -->
 ## Roadmap
