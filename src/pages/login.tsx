@@ -19,10 +19,11 @@ const LoginPage: React.FC<IPage> = (props) => {
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
 				setBackendErrors('');
-				setToken(data.token);
-				history.push("/");
-				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
 				setUsername(data.username!)
+				setToken(data.token);
+				window.location.reload();
+				// history.push("/");
+				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
 			})
 			.catch((err) => {
 				if(!err.response){
