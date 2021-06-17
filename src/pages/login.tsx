@@ -1,6 +1,6 @@
 import React, {useEffect,useCallback,useContext,useState} from 'react';
 import IPage from '../interfaces/page';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import logging from'../configs/logging';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +11,7 @@ import { QuizmeApi } from '../api';
 import AppContext from "../appContext";
 
 const LoginPage: React.FC<IPage> = (props) => {
-    const history = useHistory();
+    // const history = useHistory();
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
     const {setToken,setUsername} = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
