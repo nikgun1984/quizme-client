@@ -12,7 +12,7 @@ const EditStudySet: React.FC = () => {
 	const classes = useStyles();
 	const { id } = useParams<ParamsType>();
 	const onSubmit = (formValues: IStudySet) => {
-    	console.log(formValues);
+    	// console.log(formValues);
 		// getLinks(formValues.cards);
         // console.log(formValues);
 		// let formData = new FormData();
@@ -21,7 +21,6 @@ const EditStudySet: React.FC = () => {
 		// formData.append('cards',JSON.stringify(formValues));
 		QuizmeApi.editStudyForm(formValues,id)
 			.then((data) => {
-				console.log(data)
 				history.push('/studysets');
 				window.location.reload();
 			})
