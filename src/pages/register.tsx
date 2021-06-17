@@ -16,13 +16,15 @@ const RegisterPage: React.FC<IPage> = props => {
     const { setToken,setUsername } = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
     const onSubmit = useCallback((formValues: IRegisterForm) => {
+		console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
+				console.log(data);
 				setBackendErrors('');
+				setUsername((formValues as any).username)
 				setToken(data.token);
-				history.push('/');
-				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
-				setUsername(data.username!)
+				history.push("/");
+				window.responsiveVoice.speak(`Welcome to QuizMe, ${(formValues as any).username}`,"US English Male");
 			})
 			.catch((err) => {
 				if(!err.response){

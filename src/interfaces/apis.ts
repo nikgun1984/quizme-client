@@ -1,6 +1,6 @@
 export interface IToken {
     token: string,
-    username?: string
+    username: string
 }
 
 export interface IPracticeComponent {

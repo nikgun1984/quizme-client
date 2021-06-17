@@ -1,6 +1,6 @@
 import React, {useEffect,useCallback,useContext,useState} from 'react';
 import IPage from '../interfaces/page';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import logging from'../configs/logging';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,18 +11,19 @@ import { QuizmeApi } from '../api';
 import AppContext from "../appContext";
 
 const LoginPage: React.FC<IPage> = (props) => {
-    // const history = useHistory();
+    const history = useHistory();
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({resolver: yupResolver(loginSchema),});
     const {setToken,setUsername} = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
 	const onSubmit = useCallback((formValues: ILoginForm) => {
+		console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
+				console.log(data);
 				setBackendErrors('');
-				setUsername(data.username!)
+				setUsername(data.username)
 				setToken(data.token);
-				window.location.reload();
-				// history.push("/");
+				history.push("/");
 				window.responsiveVoice.speak(`Welcome to QuizMe, ${data.username}`,"US English Male");
 			})
 			.catch((err) => {
