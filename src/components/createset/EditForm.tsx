@@ -75,7 +75,7 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 						const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
 						return (
 							<div key={field.id} className={classes.boxBorder}>
-								<FlashCardForm control={control} idx={idx} errors={errors} watchFields={watchFields} remove={remove} card={field} fieldID={field.id} setIsDeleted={setIsDeleted}/>
+								<FlashCardForm key={field.id} control={control} idx={idx} errors={errors} watchFields={watchFields} remove={remove} card={field} fieldID={field.id} setIsDeleted={setIsDeleted}/>
 							</div>
 						)
 					})

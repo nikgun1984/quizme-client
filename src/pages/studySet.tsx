@@ -9,8 +9,9 @@ import { useStyles } from '../components/createset/styles';
 import {Grid,Box} from '@material-ui/core';
 import {IStudySet} from '../interfaces/studyset';
 import { QuizmeApi } from '../api';
-import FlashCardForm from '../components/createset/FlashCardForm';
 import { IStudySetResponse } from '../interfaces/apis';
+import WordAutocomplete from '../components/WordAutocomplete';
+import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
 // import {getLinks} from '../utilities/uploadImages';
 
 const StudySetPage: React.FC<IPage> = props => {
@@ -33,6 +34,7 @@ const StudySetPage: React.FC<IPage> = props => {
 		console.log(formValues);
 		QuizmeApi.createStudyForm(formValues,'')
 			.then((data) => {
+				console.log(data);
 				history.push('/studysets');
 				window.location.reload();
 			})
@@ -69,7 +71,7 @@ const StudySetPage: React.FC<IPage> = props => {
     //}
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)
-	},[fields, props.name, watch]);
+	},[props.name]);
 	return (
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
@@ -107,7 +109,41 @@ const StudySetPage: React.FC<IPage> = props => {
 							const watchFields = watch([`cards.${idx}.term`, `cards.${idx}.definition`]);
 							return (
 								<div key={field.id} className={classes.boxBorder}>
-									<FlashCardForm control={control} idx={idx} errors={errors} watchFields={watchFields} remove={remove} fieldID=""/>
+									<div className={classes.space}>
+										<p>{`FLASHCARD#${idx+1}`}</p>
+										<Grid item container spacing={2} alignItems="center" justify="center">
+											<Grid item xs={12} lg={3}>
+												<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value={field?.term}/>
+													{/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
+											</Grid>
+											<Grid item xs={12} lg={4}>
+												<div className="input-field">
+													<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx} value={field?.definition}/>
+													{/* {watchFields[1] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
+												</div>
+											</Grid>
+											<Grid item xs={12} lg={3}>
+												{/* <div className={`${classes.paper} input-field`}>
+													<input type="file" className="validate" id="file" {...register(`cards.${idx}.img` as const)} />
+													<label htmlFor="file" className="active">IMAGE</label>
+												</div> */}
+												<div className="file-field input-field">
+													<div className="btn purple darken-1">
+														<span>Image</span>
+														{/* <input type="file" id="file" {...register(`cards.${idx}.img` as const)}/> */}
+													</div>
+													<div className="file-path-wrapper">
+														<input className="file-path validate" type="text" value="uploaded" disabled/>
+													</div>
+												</div>
+											</Grid>
+											<Grid item xs={12} lg={1}>
+												<div className={`${classes.paper} input-field`}>
+													<button type="button" onClick={() => remove()}><span className="material-icons align-center">delete</span></button>
+												</div>
+											</Grid>
+										</Grid>
+									</div>
 								</div>
 							)
 						})}

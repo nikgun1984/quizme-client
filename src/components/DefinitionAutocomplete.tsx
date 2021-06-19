@@ -6,6 +6,8 @@ import { IStudySetResponse } from "../interfaces/apis";
 
 export default function WordAutocomplete({ word,control,name,errors,idx,value }:{word:string,name:any,control:Control<IStudySetResponse>,errors:DeepMap<IStudySetResponse, FieldError>,idx:number, value:string}) {
   const [definitions, setDefinitions] = useState<string[]>([]);
+  const [def,setDef] = useState('');
+
   	const onFocusHandle = async (word:string) => {
       if(word){
 		    setDefinitions([]);
@@ -29,7 +31,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx,value }:
       render={({ field }) => (
         <Autocomplete
           onChange={(e, data) => field.onChange(data)}
-          value={value || field.value}
+          value={field.value || ""}
           freeSolo
           options={definitions}
           getOptionSelected={(option, value) => option === value}
@@ -37,7 +39,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx,value }:
           renderInput={params => (
             <div className="input-field">
               <TextField {...params} label="DEFINITION" placeholder="Enter definition" InputProps={{...params.InputProps, disableUnderline: true}}
-                onFocus={()=>onFocusHandle(word)} onChange={(e) =>{field.onChange(e.target.value)}} name={name}/>
+                onFocus={(e)=>onFocusHandle(word)} onChange={(e) =>{field.onChange(e.target.value)}} name={name}/>
               {errors?.cards && errors?.cards[idx]?.definition?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.definition?.message}</span>}
             </div>
           )}
