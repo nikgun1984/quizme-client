@@ -6,7 +6,6 @@ import { IStudySetResponse } from "../interfaces/apis";
 
 export default function WordAutocomplete({ word,control,name,errors,idx,value }:{word:string,name:any,control:Control<IStudySetResponse>,errors:DeepMap<IStudySetResponse, FieldError>,idx:number, value:string}) {
   const [definitions, setDefinitions] = useState<string[]>([]);
-  const [def,setDef] = useState('');
 
   	const onFocusHandle = async (word:string) => {
       if(word){

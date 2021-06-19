@@ -7,7 +7,6 @@ import { IStudySetResponse } from "../interfaces/apis";
 export default function WordAutocomplete({ control,name,errors,idx,value}:{name:any;control:Control<IStudySetResponse>;errors:DeepMap<IStudySetResponse, FieldError>;idx:number;value:string}) {
   const [open, setOpen] = useState<boolean>(false);
   const [words, setWords] = useState<string[]>([]);
-  const [word,setWord] = useState('');
   	const onChangeHandle = async (value:string) => {
       if(value && value.length > 2){
         const response = await fetch(

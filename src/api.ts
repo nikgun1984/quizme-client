@@ -2,8 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import {IToken} from './interfaces/apis';
 import {IStudySetResponse,IResponseWord,IDeletedFlashcard} from  './interfaces/apis';
 
-// const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
-
 /** API Class.
  *
  * Static class tying together methods used to get/send to to the API.
