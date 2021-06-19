@@ -46,10 +46,10 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About The Project  
 
-<!--https://quizme-api.herokuapp.com/
--->
+https://quizme-app.netlify.app/  
+  
 The purpose of the following application is learning English words by playing games,
 creating quizes and internalize those words by doing different activities. Going ahead it should not to be necessarily limited to english language but can be later extended to different subcategories like learning science/math/biology/preparing for exam and creating flashcards for any class etc.  
 This is React application built with modern functional components and hooks like useState,useEffect, useRef, useHistory and also react-hook-form. For storage, Redux store was utilized including types, actions and reducers. For visuals, Material UI with combination of Materialize CSS was used to achieve desired positioning of components and make the task somewhat easier. Responsiveness is almost fully achieved, just some more touches needed to accomplish this goal. To insure correct type usage, I used Typescript in this project. 
@@ -66,6 +66,7 @@ This is React application built with modern functional components and hooks like
 * [Datamuse API](http://api.datamuse.com/)
 * [ResponsiveVoice API](https://responsivevoice.org/text-to-speech-languages) 
 * [Firebase Cloud Service](https://firebase.google.com/) 
+* [Netlify](https://www.netlify.com/)
 
 <code><img height="40" src="https://raw.githubusercontent.com/shinokada/shinokada/master/assets/javascript.png"></code>
 <code><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png"></code>
@@ -76,6 +77,8 @@ This is React application built with modern functional components and hooks like
 <code><img height="40" src="https://res.cloudinary.com/practicaldev/image/fetch/s---i0cDVfO--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://thepracticaldev.s3.amazonaws.com/i/okch3o6nltafe4pdyfdg.png"></code>
 <code><img height="40" src="https://reactjsexample.com/content/images/2019/04/react-hook-form.jpg"></code>
 <code><img height="40" src="https://venturebeat.com/wp-content/uploads/2020/10/google-firebase-logo.png?fit=800%2C400&strip=all"></code>  
+<code><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Netlify_logo.svg/1280px-Netlify_logo.svg.png"></code>  
+
 
 
 ## Getting Started
