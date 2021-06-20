@@ -69,9 +69,9 @@ const StudySetPage: React.FC<IPage> = props => {
 		// fd.append('image',file,file.name);
         // send "values" to database
     //}
-	useEffect(()=> {
-		logging.info(`Loading ${props.name}`)
-	},[props.name]);
+	// useEffect(()=> {
+	// 	logging.info(`Loading ${props.name}`)
+	// },[props.name]);
 	return (
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
