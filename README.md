@@ -13,22 +13,18 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
-https://user-images.githubusercontent.com/22064946/122688528-bb4efb00-d1ea-11eb-8ce2-dc78df64c6d6.mp4
-
-
-
-<!-- PROJECT LOGO -->
-<br />
 <p align="center">
   <a href="https://ketolifeapp.herokuapp.com/">
     <img src="logo.png" alt="Logo" width="100">
   </a>
   <h3 align="center">QuizMe React Application</h3>
 </p>
+<br/>
 
-
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/22064946/122689131-85137a80-d1ee-11eb-9dac-b2b9a0e63448.gif" alt="Logo" width="900">
+</p>
+<br />
 
 
 <!-- TABLE OF CONTENTS -->
@@ -45,7 +41,6 @@ https://user-images.githubusercontent.com/22064946/122688528-bb4efb00-d1ea-11eb-
 * [License](#license)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
-
 
 
 <!-- ABOUT THE PROJECT -->
@@ -146,7 +141,7 @@ Welcome Screen with Word of the day:
 Other Illustrations:  
 Creation of Studyset that consists of flashcards:
 ![alt text](sample2.png). 
-Studysets that the user has.  
+Studysets of a user    
 ![alt text](sample3.png)
 Study and Practice your topics with cool graphical interface:  
 ![alt text](sample4.png)
