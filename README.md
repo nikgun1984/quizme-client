@@ -13,7 +13,10 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-![alt text](sample.gif)
+
+
+https://user-images.githubusercontent.com/22064946/122688528-bb4efb00-d1ea-11eb-8ce2-dc78df64c6d6.mp4
+
 
 
 <!-- PROJECT LOGO -->
