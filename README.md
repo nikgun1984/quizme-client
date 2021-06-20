@@ -13,7 +13,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-![alt text](sample.png)
+![alt text](sample.gif)
 
 
 <!-- PROJECT LOGO -->
