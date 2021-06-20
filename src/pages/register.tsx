@@ -13,9 +13,9 @@ import AppContext from "../appContext";
 const RegisterPage: React.FC<IPage> = props => {
     const history = useHistory()
  	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
-    const { setToken,setUsername } = useContext(AppContext);
+    const { token,setToken,setUsername } = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
-    const onSubmit = useCallback((formValues: IRegisterForm) => {
+    const onSubmit = (formValues: IRegisterForm) => {
 		console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
@@ -24,6 +24,7 @@ const RegisterPage: React.FC<IPage> = props => {
 				setUsername((formValues as any).username)
 				setToken(data.token);
 				history.push("/");
+				window.location.reload();
 				window.responsiveVoice.speak(`Welcome to QuizMe, ${(formValues as any).username}`,"US English Male");
 			})
 			.catch((err) => {
@@ -35,7 +36,7 @@ const RegisterPage: React.FC<IPage> = props => {
   					}
 				}
 			});
-  	}, [history, setToken, setUsername]);
+  	};
 
 	useEffect(()=> {
 		logging.info(`Loading ${props.name}`)

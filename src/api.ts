@@ -9,15 +9,13 @@ import {IStudySetResponse,IResponseWord,IDeletedFlashcard} from  './interfaces/a
  * be any API-aware stuff elsewhere in the frontend.
  *https://quizme-api.herokuapp.com/
  */
-const token = localStorage.getItem('token') || "";
+// const token = localStorage.getItem('token') || "";
+
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3001",
-	// baseURL: "https://quizme-api.herokuapp.com",
-	// timeout: 15000,
-	// withCredentials: true,
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: `Bearer ${token}`
+		Authorization: `Bearer ${localStorage.getItem('token') || ""}`
 	}
 });
 

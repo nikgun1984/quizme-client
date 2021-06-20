@@ -15,8 +15,8 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 	const [submitting, setSubmitting] = useState(false)
 	useEffect(()=>{
 		let timer: NodeJS.Timeout;
-		const removeCard = async (idx:number,idSet:number) => {
-			await QuizmeApi.removeFlashcard(fieldID)
+		const removeCard = (idx:number,idSet:number) => {
+			QuizmeApi.removeFlashcard(fieldID)
 				.then((data) => {
 					setSubmitting(false)
 					if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { useHistory } from 'react-router';
 import { useForm, useFieldArray} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,15 +7,18 @@ import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { useStyles } from '../components/createset/styles';
 import {Grid,Box} from '@material-ui/core';
-import {IStudySet} from '../interfaces/studyset';
+import {ICreateStudySet} from '../interfaces/studyset';
 import { QuizmeApi } from '../api';
 import { IStudySetResponse } from '../interfaces/apis';
 import WordAutocomplete from '../components/WordAutocomplete';
 import DefinitionAutocomplete from '../components/DefinitionAutocomplete';
+import AppContext from '../appContext';
 // import {getLinks} from '../utilities/uploadImages';
 
 const StudySetPage: React.FC<IPage> = props => {
     const history = useHistory();
+    const { username } = useContext(AppContext);
+
     const classes = useStyles();
 	const { register, watch,control,handleSubmit, formState: { errors } } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema)});
     const {fields,append,remove} = useFieldArray({
@@ -23,7 +26,8 @@ const StudySetPage: React.FC<IPage> = props => {
 		name: 'cards',
 	})
 
-	const onSubmit = (formValues: IStudySet) => {
+	const onSubmit = (formValues: ICreateStudySet) => {
+		formValues.username = username;
     	// console.log(formValues);
 		// getLinks(formValues.cards);
         // console.log(formValues);
@@ -69,9 +73,9 @@ const StudySetPage: React.FC<IPage> = props => {
 		// fd.append('image',file,file.name);
         // send "values" to database
     //}
-	// useEffect(()=> {
-	// 	logging.info(`Loading ${props.name}`)
-	// },[props.name]);
+	useEffect(()=> {
+		logging.info(`Loading ${props.name}`)
+	},[props.name]);
 	return (
 		<div className={classes.root}>
 				<form className="mt4" onSubmit={handleSubmit(onSubmit)} >

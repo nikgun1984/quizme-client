@@ -7,7 +7,11 @@ const useLocalStorageState = (key:string,defaultVal:string) => {
 	});
 
 	useEffect(() => {
-		localStorage.setItem(key, state);
+		if(!state){
+			localStorage.removeItem(key);
+		} else {
+			localStorage.setItem(key, state);
+		}
 	},[key,state]);
 
 	return [state, setState] as const;

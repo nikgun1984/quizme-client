@@ -11,6 +11,13 @@ export interface IStudySet {
 	cards: IFlashCard[];
 }
 
+export interface ICreateStudySet {
+	title: string;
+	description:string;
+	username: string,
+	cards: IFlashCard[];
+}
+
 export interface IEditSet {
 	id: string;
 	action: string;

@@ -16,6 +16,7 @@ import useWindowSize from './hooks/useWindowSize';
 import { RootStore } from './state/store';
 import { formatDate } from './utilities/getCorrectDate';
 
+
 const App: React.FC<{}> = (props) => {
   const dispatch = useDispatch();
   const isWinner:boolean = useSelector((st:RootStore) => st.setWinner.setWinner);
