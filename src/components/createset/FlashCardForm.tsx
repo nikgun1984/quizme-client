@@ -28,17 +28,15 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 				.catch((err) => {
 					console.log(err)
 				});
-			dispatch(deleteFlashCard(idx,idSet));
 		}
 		if(submitting && card){
-			console.log(card.id);
-			console.log(typeof card.id)
-			if(card.id === "number"){
+			if(typeof card.id === "number"){
 				remove(idx);
-				removeCard(+card.id,+card.studyset_id);
+				removeCard(+fieldID,+card.studyset_id);
 			} else {
 				remove(idx);
 			}
+			dispatch(deleteFlashCard(+fieldID,+card.studyset_id));
 		}
 		return () => clearTimeout(timer);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
