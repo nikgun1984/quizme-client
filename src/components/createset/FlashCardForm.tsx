@@ -3,7 +3,7 @@ import DefinitionAutocomplete from '../DefinitionAutocomplete';
 import {Grid} from '@material-ui/core';
 import {useStyles} from './styles';
 import {IFlashCardForm} from '../../interfaces/forms';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useCallback, useRef } from 'react';
 import { QuizmeApi } from '../../api';
 import { useDispatch } from "react-redux";
 import {deleteFlashCard} from '../../state/actions/studysetActions';
@@ -13,35 +13,32 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const [submitting, setSubmitting] = useState(false);
+    const timer:{current: NodeJS.Timeout | null} = useRef(null);
+
+	const removeCard = useCallback((idx:number,idSet:number)=>{
+		QuizmeApi.removeFlashcard(fieldID)
+			.then((data) => {
+				setSubmitting(false)
+				if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
+			})
+			.catch((err) => {
+				console.log(err)
+			});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[])
 
 	useEffect(()=>{
-		let timer: NodeJS.Timeout;
-		const removeCard = async (idx:number,idSet:number) => {
-			await QuizmeApi.removeFlashcard(fieldID)
-				.then((data) => {
-					setSubmitting(false)
-					if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
-					timer = setTimeout(() => {
-						setIsDeleted && setIsDeleted('')
-					}, 5000);
-				})
-				.catch((err) => {
-					console.log(err)
-				});
-		}
 		if(submitting && card){
 			if(typeof card.id === "number"){
 				removeCard(+card.id,+card.studyset_id);
-				remove(idx);
-			} else {
-				remove(idx);
 			}
-			console.log(idx);
-
-			console.log(watchFields);
+			remove(idx);
 			dispatch(deleteFlashCard(+fieldID,+card.studyset_id));
+			timer.current = setTimeout(() => {
+				setIsDeleted && setIsDeleted('')
+			}, 5000);
 		}
-		return () => clearTimeout(timer);
+		return () => clearTimeout(timer.current!);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[submitting])
 	return (

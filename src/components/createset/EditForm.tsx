@@ -15,7 +15,7 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	const [state,setState] = useState(false);
 	const studysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const [isDeleted,setIsDeleted] = useState<string>('');
-	const { register, watch,control,handleSubmit,getValues, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
+	const { register, watch,control,handleSubmit, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
 		id: '',
 		title: '',
 		description:'',
@@ -29,7 +29,6 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	const addCard = (e:React.SyntheticEvent): void => {
 		e.preventDefault();
 		append({term:"",definition:"",studyset_id:id});
-		console.log(getValues())
 	};
 
 	useEffect(()=>{
