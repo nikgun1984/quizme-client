@@ -16,10 +16,8 @@ const LoginPage: React.FC<IPage> = (props) => {
     const {setToken,setUsername} = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
 	const onSubmit = useCallback((formValues: ILoginForm) => {
-		console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'token')
 			.then((data) => {
-				console.log(data);
 				setBackendErrors('');
 				setUsername(data.username)
 				setToken(data.token);

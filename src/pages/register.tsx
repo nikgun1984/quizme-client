@@ -1,4 +1,4 @@
-import React, {useEffect,useState,useCallback,useContext} from 'react';
+import React, {useEffect,useState,useContext} from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
@@ -13,13 +13,11 @@ import AppContext from "../appContext";
 const RegisterPage: React.FC<IPage> = props => {
     const history = useHistory()
  	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
-    const { token,setToken,setUsername } = useContext(AppContext);
+    const { setToken,setUsername } = useContext(AppContext);
 	const [backendErrors,setBackendErrors] = useState('');
     const onSubmit = (formValues: IRegisterForm) => {
-		console.log(formValues);
 		QuizmeApi.getAuthorization(formValues,'register')
 			.then((data) => {
-				console.log(data);
 				setBackendErrors('');
 				setUsername((formValues as any).username)
 				setToken(data.token);

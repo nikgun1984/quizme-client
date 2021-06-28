@@ -15,12 +15,12 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	const classes = useStyles();
 	const studysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const [isDeleted,setIsDeleted] = useState<string>('');
-	const { register, watch,control,handleSubmit, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
-		id: id,
+	const { register, watch,control,handleSubmit,setValue, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
+		id: '',
 		title: '',
 		description:'',
 		username: '',
-		cards: []
+		cards:[]
 	}});
     const {fields,append,remove} = useFieldArray({
 		control,
@@ -34,9 +34,10 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	useEffect(()=>{
 		const set = studysets?.find(el=>+el.id === +id);
 		if(set){
+			console.log(set);
 			reset(set)
 		}
-  	},[studysets, reset, id]);
+  	},[studysets, reset, id,setValue]);
 
 	return (
 			<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
