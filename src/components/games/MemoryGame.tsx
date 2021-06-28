@@ -9,10 +9,14 @@ import {shuffle,getRandomCards,getAllCards} from '../../utilities/shuffleCards';
 import {ParamsType} from '../../interfaces/types';
 import {IMemoryCard} from '../../interfaces/cardGames';
 import {IResponseFlashCard} from '../../interfaces/apis';
+import { useDispatch } from 'react-redux';
+import {Dispatch} from 'redux';
+import {setWinner} from '../../state/actions/winnerActions';
 
 
 const MemoryGame:React.FC<ParamsType> = ({id}) => {
   const history = useHistory();
+  const dispatch:Dispatch<any> = useDispatch();
   const studysets = useSelector((state: RootStore) => state.studysets.studysets);
   const cards = studysets?.filter(el=>+el.id === +id)[0].cards;
   const classes = useStyles();
@@ -21,11 +25,13 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
   const [flashcards, setFlashcards] = useState<IMemoryCard[]>([]);
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([]);
   const [flipped, setFlipped] = useState<boolean[]>(new Array(12).fill(false));
+  const [countFlipped,setCountFlipped] = useState(0);
 
   const checking = () => {
     const [firstCard, secondCard] = flippedIndexes;
     if (flashcards[firstCard].id === flashcards[secondCard].id) {
-      setFlipped(arr=>arr.map((el,idx)=>idx===firstCard || idx ===secondCard?true:el ))
+      setFlipped(arr=>arr.map((el,idx)=>idx===firstCard || idx ===secondCard?true:el ));
+      setCountFlipped(count=>count+1);
       setFlippedIndexes([]);
       return;
     }
@@ -50,7 +56,9 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
   };
 
   const handleCardsShuffle = () => {
-    setFlipped(new Array(flashcards.length).fill(false));
+    setFlipped(cards=>cards.map(flipped=>false));
+    setCountFlipped(0);
+    dispatch(setWinner());
     setFlashcards(()=>{
       const shuffledCards = shuffle<IResponseFlashCard>(cards!);
       const randCards = getRandomCards(shuffledCards);
@@ -59,6 +67,8 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
   }
 
   const handleClick = () => {
+		dispatch(setWinner());
+    setCountFlipped(0);
     history.push('/studysets');
   }
 
@@ -66,6 +76,9 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
     let timeout:any = null;
     if (flippedIndexes.length === 2) {
       timeout = setTimeout(checking, 300);
+    }
+    if(cards?.length===countFlipped){
+      dispatch(setWinner());
     }
     return () => {
       clearTimeout(timeout);

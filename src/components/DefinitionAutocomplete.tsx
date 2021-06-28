@@ -30,7 +30,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx,value }:
       render={({ field }) => (
         <Autocomplete
           onChange={(e, data) => field.onChange(data)}
-          value={field.value || ""}
+          value={value || ""}
           freeSolo
           options={definitions}
           getOptionSelected={(option, value) => option === value}

@@ -12,7 +12,8 @@ import {deleteFlashCard} from '../../state/actions/studysetActions';
 const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,remove,card,fieldID,setIsDeleted}) => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
-	const [submitting, setSubmitting] = useState(false)
+	const [submitting, setSubmitting] = useState(false);
+
 	useEffect(()=>{
 		let timer: NodeJS.Timeout;
 		const removeCard = (idx:number,idSet:number) => {
@@ -41,7 +42,7 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 			<p>{`FLASHCARD#${idx+1}`}</p>
 			<Grid item container spacing={2} alignItems="center" justify="center">
 				<Grid item xs={12} lg={3}>
-					<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value={card?card.term: ""}/>
+					<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value={card?.term!}/>
 						{/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 				</Grid>
 				<Grid item xs={12} lg={4}>
