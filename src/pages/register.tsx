@@ -1,5 +1,5 @@
 import React, {useEffect,useState,useContext} from 'react';
-import { Link,useHistory } from 'react-router-dom';
+import { Link,RouteComponentProps,useHistory } from 'react-router-dom';
 import IPage from '../interfaces/page';
 import logging from'../configs/logging';
 import { IRegisterForm } from '../interfaces/forms';
@@ -10,7 +10,7 @@ import { QuizmeApi } from '../api';
 import AppContext from "../appContext";
 
 
-const RegisterPage: React.FC<IPage> = props => {
+const RegisterPage: React.FC<IPage & RouteComponentProps<any>> = props => {
     const history = useHistory()
  	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema),});
     const { setToken,setUsername } = useContext(AppContext);

@@ -1,13 +1,15 @@
-import { useParams } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import EditForm from '../components/createset/EditForm';
 import {ParamsType} from '../interfaces/types';
 import {useStyles} from '../components/createset/styles';
 import {IStudySet} from '../interfaces/studyset';
 import { useHistory } from 'react-router';
 import { QuizmeApi } from '../api';
+import IPage from "../interfaces/page";
 
 
-const EditStudySet: React.FC = () => {
+const EditStudySet: React.FC<IPage & RouteComponentProps<any>> = props => {
+	console.log(props);
 	const history = useHistory();
 	const classes = useStyles();
 	const { id } = useParams<ParamsType>();

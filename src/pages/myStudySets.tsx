@@ -3,8 +3,10 @@ import {useSelector} from "react-redux";
 import { RootStore } from '../state/store';
 import { useHistory } from "react-router";
 import { useState }  from "react";
+import IPage from '../interfaces/page';
+import { RouteComponentProps } from 'react-router-dom';
 
-const MyStudySets = () => {
+const MyStudySets:React.FC<IPage & RouteComponentProps<any>> = props => {
     const userStudysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const [deleted,setDeleted] = useState('');
     const history = useHistory();

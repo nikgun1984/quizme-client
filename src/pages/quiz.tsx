@@ -1,12 +1,13 @@
-import {useParams} from 'react-router-dom';
+import {RouteComponentProps, useParams} from 'react-router-dom';
 import {useState} from 'react';
 import Quizme from '../components/quiz/Quizme';
 import {Grid} from '@material-ui/core/';
 import {useStyles} from '../components/quiz/useStyles';
 import {ParamsType} from '../interfaces/types';
+import IPage from '../interfaces/page';
 
 
-const QuizPage: React.FC = () => {
+const QuizPage: React.FC<IPage & RouteComponentProps<any>> = props => {
 	const classes = useStyles();
 	const { id } = useParams<ParamsType>();
 	const [hidden,setHidden] = useState<boolean>(false);

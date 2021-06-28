@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { BrowserRouter, Route, Switch, RouteComponentProps} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, RouteComponentProps, Redirect} from 'react-router-dom';
 import {useDispatch,useSelector} from "react-redux";
 import { MuiThemeProvider } from '@material-ui/core';
 import Confetti from "react-confetti";
@@ -50,6 +50,11 @@ const App: React.FC<{}> = (props) => {
                       path={route.path}
                       exact={route.exact}
                       render={(props: RouteComponentProps<any>) => (
+                          route.protected?username?<route.component
+                              name={route.name} 
+                              {...props}
+                              {...route.props}
+                          />:<Redirect to="/login"/>:
                           <route.component
                               name={route.name} 
                               {...props}
