@@ -38,7 +38,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx,value }:
           renderInput={params => (
             <div className="input-field">
               <TextField {...params} label="DEFINITION" placeholder="Enter definition" InputProps={{...params.InputProps, disableUnderline: true}}
-                onFocus={(e)=>onFocusHandle(word)} onChange={(e) =>{field.onChange(e.target.value)}} name={name}/>
+                onFocus={(e)=>onFocusHandle(word)} onChange={(e) =>{field.onChange(e.target.value)}}/>
               {errors?.cards && errors?.cards[idx]?.definition?.message && <span className="helper-text red-text left-align">{errors?.cards[idx]?.definition?.message}</span>}
             </div>
           )}

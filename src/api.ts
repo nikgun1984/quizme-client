@@ -34,7 +34,7 @@ export const QuizmeApi = {
 	editStudyForm:  (formData:{}, id:string): Promise<IStudySetResponse> => requests.put(`studysets/${id}`,formData),
 	getMyStudysets: (url:string): Promise<IStudySetResponse[]> => requests.get(`studysets/${url}/all`),
 	getStudySet: (id:string): Promise<IStudySetResponse> => requests.get(`studysets/${id}`),
-	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword/word?date=${date}`),
+	getWordDetails: (date:string): Promise<IResponseWord> => requests.get(`dailyword?date=${date}`),
 	removeFlashcard: (id:string): Promise<IDeletedFlashcard> => requests.delete(`studysets/flashcard/${id}`),
     removeStudyset: (id:string): Promise<IDeletedFlashcard> => requests.delete(`studysets/${id}`)
 };
