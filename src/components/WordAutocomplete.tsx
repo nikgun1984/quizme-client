@@ -32,7 +32,7 @@ export default function WordAutocomplete({ control,name,errors,idx,value}:{name:
     <Controller
       render={({ field }) => (
         <Autocomplete
-          value={field.value || ""}
+          value={value || ""}
           freeSolo
           onOpen={() => {
             setOpen(true);
@@ -53,7 +53,7 @@ export default function WordAutocomplete({ control,name,errors,idx,value}:{name:
           onChange={(_, data) => field.onChange(data)}
         />
       )}
-      // defaultValue=""
+      defaultValue={value}
       name={name}
       control={control}
     />
