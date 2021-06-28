@@ -44,6 +44,7 @@ export default function WordAutocomplete({ word,control,name,errors,idx,value }:
           )}
         />
       )}
+      defaultValue={value}
       name={name}
       control={control}
     />
