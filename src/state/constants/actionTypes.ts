@@ -6,6 +6,7 @@ export const USER_STUDYSETS_LOADING = "USER_STUDYSETS_LOADING";
 export const USER_STUDYSETS_FAIL = "USER_STUDYSETS_FAIL";
 export const USER_STUDYSETS_SUCCESS = "USER_STUDYSETS_SUCCESS";
 export const SET_WINNER = "SET_WINNER";
+export const SET_WINNER_OFF = "SET_WINNER_OFF"
 export const SET_WORD = "SET_WORD";
 export const SET_WORD_FAIL = "SET_WORD_FAIL";
 export const DELETE_FLASHCARD = "DELETE_FLASHCARD";
@@ -30,6 +31,11 @@ export interface UserWinner {
 	payload: boolean;
 }
 
+export interface SetWinnerOff {
+	type: typeof SET_WINNER_OFF,
+	payload: boolean;
+}
+
 export interface IWord{
 	type: typeof SET_WORD,
 	payload: IResponseWord;
@@ -51,4 +57,5 @@ export interface IDeleteStudyset{
 }
 
 export type UserStudysetDispatchTypes = UserStudysetLoading | UserStudysetFail | UserStudysetSuccess | IDeleteFlashCard | IDeleteStudyset;
+export type UserWinnerOnOff = UserWinner | SetWinnerOff;
 export type  WordDispatchTypes = IWordFail | IWord;

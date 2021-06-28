@@ -4,6 +4,9 @@ import logo from '../logo.png';
 import AppContext from "../appContext";
 import {Menu, MenuItem, Button} from '@material-ui/core';
 import { makeStyles, createStyles,Theme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import {Dispatch} from 'redux';
+import {setWinnerOff} from '../state/actions/winnerActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +24,7 @@ const NavBar: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const dispatch:Dispatch<any> = useDispatch();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,9 +32,11 @@ const NavBar: React.FC = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    dispatch(setWinnerOff());
   };
   const handleLogout = () => {
     handleMenuClose();
+    dispatch(setWinnerOff());
     setUsername('');
     history.push("/login");
     setToken('');
@@ -44,9 +50,9 @@ const NavBar: React.FC = () => {
 
         </ul> */}
         <div className="nav-wrapper purple accent-2 px1">
-          <Link to="/"><img src={logo} alt="" className="px1 align-center" width="150"/></Link>
+          <Link to="/" onClick={()=>dispatch(setWinnerOff())}><img src={logo} alt="" className="px1 align-center" width="150"/></Link>
           <ul id="nav-mobile" className={"right hide-on-med-and-down"}>
-            {token && <li><NavLink to="/create-set">Create Study Set</NavLink></li>}
+            {token && <li><NavLink to="/create-set" onClick={()=>dispatch(setWinnerOff())}>Create Study Set</NavLink></li>}
             {/* <li><Link to=""><i className="material-icons">search</i></Link></li> */}
             {!token && (
               <>

@@ -21,6 +21,6 @@ export interface IFlashCardForm {
 	remove: (idx: number) => void;
     card?: IResponseFlashCard | undefined;
     fieldID: string;
-	setIsDeleted?: Dispatch<SetStateAction<string>>
+	setIsDeleted: Dispatch<SetStateAction<string>>
 }
 

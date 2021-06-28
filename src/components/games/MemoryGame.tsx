@@ -11,7 +11,7 @@ import {IMemoryCard} from '../../interfaces/cardGames';
 import {IResponseFlashCard} from '../../interfaces/apis';
 import { useDispatch } from 'react-redux';
 import {Dispatch} from 'redux';
-import {setWinner} from '../../state/actions/winnerActions';
+import {setWinner,setWinnerOff} from '../../state/actions/winnerActions';
 
 
 const MemoryGame:React.FC<ParamsType> = ({id}) => {
@@ -58,7 +58,7 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
   const handleCardsShuffle = () => {
     setFlipped(cards=>cards.map(flipped=>false));
     setCountFlipped(0);
-    dispatch(setWinner());
+    dispatch(setWinnerOff());
     setFlashcards(()=>{
       const shuffledCards = shuffle<IResponseFlashCard>(cards!);
       const randCards = getRandomCards(shuffledCards);
@@ -67,7 +67,7 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
   }
 
   const handleClick = () => {
-		dispatch(setWinner());
+		dispatch(setWinnerOff());
     setCountFlipped(0);
     history.push('/studysets');
   }
@@ -124,4 +124,5 @@ const MemoryGame:React.FC<ParamsType> = ({id}) => {
 }
 
 export default MemoryGame;
+
 

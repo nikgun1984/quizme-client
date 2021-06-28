@@ -7,6 +7,7 @@ import { useState,useEffect, useCallback, useRef } from 'react';
 import { QuizmeApi } from '../../api';
 import { useDispatch } from "react-redux";
 import {deleteFlashCard} from '../../state/actions/studysetActions';
+import { IResponseFlashCard } from '../../interfaces/apis';
 
 
 const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,remove,card,fieldID,setIsDeleted}) => {
@@ -14,12 +15,14 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 	const classes = useStyles();
 	const [submitting, setSubmitting] = useState(false);
     const timer:{current: NodeJS.Timeout | null} = useRef(null);
+    const mountedRef = useRef(true)
 
-	const removeCard = useCallback((idx:number,idSet:number)=>{
+	const removeAPICard = useCallback((idx:number,idSet:number)=>{
 		QuizmeApi.removeFlashcard(fieldID)
 			.then((data) => {
-				setSubmitting(false)
-				if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
+				if (!mountedRef.current) return null
+				setSubmitting(false);
+				dispatch(deleteFlashCard(idx,idSet));
 			})
 			.catch((err) => {
 				console.log(err)
@@ -27,18 +30,25 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[])
 
+	const removeCard = (card:IResponseFlashCard) => {
+		if(typeof card.id === "number"){
+			removeAPICard(+card.id,+card.studyset_id);
+		}
+		remove(idx);
+		setIsDeleted('Flashcard has been deleted...');
+		timer.current = setInterval(() => {
+			setIsDeleted('')
+		}, 5000);
+	}
+
 	useEffect(()=>{
 		if(submitting && card){
-			if(typeof card.id === "number"){
-				removeCard(+card.id,+card.studyset_id);
-			}
-			remove(idx);
-			dispatch(deleteFlashCard(+fieldID,+card.studyset_id));
-			timer.current = setTimeout(() => {
-				setIsDeleted && setIsDeleted('')
-			}, 5000);
+			removeCard(card);
 		}
-		return () => clearTimeout(timer.current!);
+		return () => {
+			clearInterval(timer.current!);
+			mountedRef.current = false;
+		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[submitting])
 	return (
