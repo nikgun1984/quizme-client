@@ -16,8 +16,8 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 
 	useEffect(()=>{
 		let timer: NodeJS.Timeout;
-		const removeCard = (idx:number,idSet:number) => {
-			QuizmeApi.removeFlashcard(fieldID)
+		const removeCard = async (idx:number,idSet:number) => {
+			await QuizmeApi.removeFlashcard(fieldID)
 				.then((data) => {
 					setSubmitting(false)
 					if(data) setIsDeleted &&  setIsDeleted('Flashcard has been deleted...');
@@ -31,11 +31,14 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 		}
 		if(submitting && card){
 			if(typeof card.id === "number"){
+				removeCard(+card.id,+card.studyset_id);
 				remove(idx);
-				removeCard(+fieldID,+card.studyset_id);
 			} else {
 				remove(idx);
 			}
+			console.log(idx);
+
+			console.log(watchFields);
 			dispatch(deleteFlashCard(+fieldID,+card.studyset_id));
 		}
 		return () => clearTimeout(timer);
@@ -46,12 +49,12 @@ const FlashCardForm:React.FC<IFlashCardForm> = ({control,idx,errors,watchFields,
 			<p>{`FLASHCARD#${idx+1}`}</p>
 			<Grid item container spacing={2} alignItems="center" justify="center">
 				<Grid item xs={12} lg={3}>
-					<WordAutocomplete control={control} name ={`cards.${idx}.term`} errors={errors} idx={idx} value={card?.term!}/>
+					<WordAutocomplete control={control} name ={`cards[${idx}].term`} errors={errors} idx={idx} value={card?.term!}/>
 						{/* {watchFields[0] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 				</Grid>
 				<Grid item xs={12} lg={4}>
 					<div className="input-field">
-						<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards.${idx}.definition`} errors={errors} idx={idx} value={card?card.definition: ""}/>
+						<DefinitionAutocomplete word={watchFields[0]} control={control} name ={`cards[${idx}].definition`} errors={errors} idx={idx} value={card?card.definition: ""}/>
 						{/* {watchFields[1] && <button onClick={(e)=>mousePressedEvent(e,watchFields[0])}><span className="material-icons">volume_up</span></button>} */}
 					</div>
 				</Grid>

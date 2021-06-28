@@ -143,7 +143,7 @@ const StudySetPage: React.FC<IPage> = props => {
 											</Grid>
 											<Grid item xs={12} lg={1}>
 												<div className={`${classes.paper} input-field`}>
-													<button type="button" onClick={() => remove()}><span className="material-icons align-center">delete</span></button>
+													<button type="button" onClick={() => remove(idx)}><span className="material-icons align-center">delete</span></button>
 												</div>
 											</Grid>
 										</Grid>

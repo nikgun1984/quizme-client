@@ -10,12 +10,12 @@ import {studySetSchema} from '../../validation/studySetSchema';
 import FlashCardForm from './FlashCardForm';
 import { IStudySetResponse } from "../../interfaces/apis";
 
-
 const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	const classes = useStyles();
+	const [state,setState] = useState(false);
 	const studysets = useSelector((state: RootStore) => state.studysets.studysets);
 	const [isDeleted,setIsDeleted] = useState<string>('');
-	const { register, watch,control,handleSubmit,setValue, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
+	const { register, watch,control,handleSubmit,getValues, formState: { errors }, reset } = useForm<IStudySetResponse>({mode: "onChange",reValidateMode: "onChange",resolver: yupResolver(studySetSchema),defaultValues: {
 		id: '',
 		title: '',
 		description:'',
@@ -24,20 +24,21 @@ const EditForm: React.FC<IEditSet> = ({id, action, onSubmit}) => {
 	}});
     const {fields,append,remove} = useFieldArray({
 		control,
-		name: 'cards',
+		name: 'cards'
 	})
 	const addCard = (e:React.SyntheticEvent): void => {
 		e.preventDefault();
-		append({})
+		append({term:"",definition:"",studyset_id:id});
+		console.log(getValues())
 	};
 
 	useEffect(()=>{
 		const set = studysets?.find(el=>+el.id === +id);
-		if(set){
-			console.log(set);
-			reset(set)
+		if(set && !state){
+			reset(set);
+			setState(true);
 		}
-  	},[studysets, reset, id,setValue]);
+  	},[studysets, reset, id, state]);
 
 	return (
 			<form className="mt4" onSubmit={handleSubmit(onSubmit)} >
